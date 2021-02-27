@@ -1,0 +1,24 @@
+@import "../../../constants";
+
+.result-area {
+  background-color: $main-dark;
+
+  &.wrapper {
+    padding-top: 0;
+  }
+
+  .result-counter {
+    padding: 20px 0;
+    font-size: $main-font-size;
+    color: $main-white;
+
+    .counter {
+      font-weight: 700;
+      margin-right: 5px;
+    }
+
+    .found {
+      font-weight: 300;
+    }
+  }
+}

@@ -1,8 +1,8 @@
-const path = require("path");
+const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const TerserPlugin = require("terser-webpack-plugin");
+const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
 module.exports = (env) => {
@@ -12,8 +12,8 @@ module.exports = (env) => {
         mode: isProduction ? 'production' : 'development',
         entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
-            path: path.resolve(__dirname, "dist"),
-            filename: "index_bundle.js"
+            path: path.resolve(__dirname, 'dist'),
+            filename: 'index_bundle.js'
         },
         resolve: {
             modules: ['node_modules'],
@@ -31,29 +31,37 @@ module.exports = (env) => {
                     use: 'ts-loader'
                 },
                 {
-                    enforce: "pre",
-                    test: /\.js$/,
-                    loader: "source-map-loader",
-                },
-                {
-                    test: /\.s[ac]ss$/i,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
-                },
-                {
-                    test: /\.(png|jpg)$/i,
-                    use: [
-                        {
-                            loader: 'url-loader',
-                            options: { limit: 8192 },
-                        },
-                    ],
-                },
-                {
-                    exclude: [/\.(js|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
-                    use: {
-                        loader: 'file-loader',
+                    oneOf: [{
+                        enforce: 'pre',
+                        test: /\.js$/,
+                        loader: 'source-map-loader',
                     },
-                },
+                        {
+                            test: /\.s[ac]ss$/i,
+                            use: ['style-loader', 'css-loader', {
+                                loader: "sass-loader",
+                                options: {
+                                    implementation: require("sass"),
+                                },
+                            }],
+                        },
+                        {
+                            test: /\.(png|jpg)$/i,
+                            use: [
+                                {
+                                    loader: 'url-loader',
+                                    options: { limit: 8192 },
+                                },
+                            ],
+                        },
+                        {
+                            exclude: [/\.(js|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
+                            use: {
+                                loader: 'file-loader',
+                            },
+                        },
+                    ]
+                }
             ]
         },
         plugins: [
@@ -69,6 +77,15 @@ module.exports = (env) => {
             minimize: isProduction,
             minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin()],
         },
+    }
+
+
+    if (isProduction) {
+        config.plugins.push(
+            new CopyPlugin({
+                patterns: [{ from: 'public', to: path.resolve(__dirname, 'dist') }],
+            })
+        );
     }
     return config;
 };

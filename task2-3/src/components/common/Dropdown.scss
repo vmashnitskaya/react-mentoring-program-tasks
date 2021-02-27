@@ -1,0 +1,70 @@
+@import "../../constants";
+@import "../../mixins";
+
+$arrow-distance: 15px;
+$max-dropdown-width: 200px;
+
+.sort {
+  display: flex;
+
+  span {
+    color: $main-white;
+    opacity: 0.5;
+    font-weight: 300;
+    font-size: $main-font-size;
+  }
+
+  .dropdown-container {
+    position: relative;
+  }
+
+  .dropdown-toggle {
+    position: relative;
+    background-color: transparent;
+    color: $main-white;
+    font-size: $main-font-size;
+    width: $max-dropdown-width;
+    text-align: right;
+  }
+
+  .material-icons {
+    background: none;
+    color: $main-pink;
+    line-height: 16px;
+    font-size: 26px;
+    vertical-align: text-top;
+    cursor: pointer;
+    margin-left: $arrow-distance;
+  }
+
+  .dropdown-list {
+    @include reset-style-list;
+    display: block;
+    background-color: rgba(66, 66, 66, 0.4);
+    border-radius: $main-border-radius;
+    position: absolute;
+    top: 26px;
+    right: -$arrow-distance;
+    width: 150px;
+    max-width: $max-dropdown-width;
+
+    &.hidden {
+      display: none;
+    }
+
+    .dropdown-list-item {
+      background-color: transparent;
+      color: $main-white;
+      font-size: $main-font-size;
+      padding: 5px 10px;
+      width: 100%;
+      border-radius: 0;
+      text-overflow: ellipsis;
+      overflow: hidden;
+
+      &:hover {
+        background-color: rgba(66, 66, 66, 0.6);
+      }
+    }
+  }
+}

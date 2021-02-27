@@ -13,9 +13,13 @@
     "strict": true,
     "experimentalDecorators": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "sourceMap": true
   },
   "include": [
-    "src/index.tsx"
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
