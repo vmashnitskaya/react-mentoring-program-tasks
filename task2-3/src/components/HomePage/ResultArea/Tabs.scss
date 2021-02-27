@@ -18,6 +18,7 @@
         color: $main-white;
       }
 
+    &.active,
     &:hover {
       &::after {
         content: "";

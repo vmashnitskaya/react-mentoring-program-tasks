@@ -9,27 +9,18 @@
 
   .more-button {
     display: none;
-    position: absolute;
-    color: $main-white;
-    background-color: rgba(66, 66, 66, 0.7);
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    right: 15px;
-    top: 15px;
+  }
 
-    span {
-      vertical-align: middle;
-    }
-
-    &:hover,
-    &:active {
-      background-color: rgba(66, 66, 66, 0.9);
-    }
+  .dropdown-list {
+    display: none;
   }
 
   &:hover {
     .more-button {
+      display: block;
+    }
+
+    .dropdown-list:not(.hidden){
       display: block;
     }
   }

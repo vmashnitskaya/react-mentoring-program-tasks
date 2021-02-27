@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
 import { FilmData } from '../../../staticData/filmData';
+import MoreDropdown from './MoreDropdown';
 import './FilmCard.scss';
 
 interface FilmCardProps {
@@ -12,10 +13,7 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
     return (
         cardInfo && (
             <div className="card-wrapper">
-                <button type="button" className="more-button">
-                    <span className="material-icons">more_vert</span>
-                </button>
-
+                <MoreDropdown />
                 <div className="card-image">
                     <img src={cardInfo.poster_path} alt="poster" />
                 </div>
@@ -23,7 +21,7 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
                     <div>
                         <div className="card-title">{cardInfo.title}</div>
                         <div className="card-genres">
-                            {cardInfo.genres.slice(0, 3).join(', ')}
+                            {cardInfo.genres.join(', ')}
                         </div>
                     </div>
                     <div className="card-year">
