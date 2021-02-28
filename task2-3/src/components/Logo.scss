@@ -9,6 +9,11 @@
     z-index: 2;
     letter-spacing: 0.5px;
 
+    &:link,
+    &:visited {
+        text-decoration: none;
+    }
+
     &-netflix {
         font-weight: 900;
     }

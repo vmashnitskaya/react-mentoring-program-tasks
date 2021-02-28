@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = (env) => {
     const isProduction = env.production;
@@ -20,7 +21,7 @@ module.exports = (env) => {
             extensions: ['.js', '.jsx', '.tsx', '.ts']
         },
         devServer: {
-            contentBase: path.resolve(__dirname, 'dist'),
+            contentBase: path.resolve(__dirname, 'public'),
             port: 9000
         },
         module: {

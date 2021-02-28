@@ -6,7 +6,6 @@ import React, {
 } from 'react';
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
-import Footer from '../Footer';
 import filmsData, { FilmData } from '../../staticData/filmData';
 
 const DEFAULT_SORT = {
@@ -21,14 +20,32 @@ export interface SortData {
     value: string;
 }
 
-const HomePage: FunctionComponent = (): JSX.Element => {
+interface HomePageProps {
+    handleEverythingOkChange: (value: boolean) => void;
+}
+
+const HomePage: FunctionComponent<HomePageProps> = ({
+    handleEverythingOkChange,
+}): JSX.Element => {
     const [baseData, setBaseData] = useState<Array<FilmData> | undefined>();
     const [data, setData] = useState<Array<FilmData> | undefined>();
     const [sortData, setSortData] = useState<SortData>(DEFAULT_SORT);
-    const [filter, setFilter] = useState<string>('All');
+    const [filterValue, setFilterValue] = useState<string>('All');
+    const [searchValue, setSearchValue] = useState('');
 
     useEffect(() => {
-        setBaseData(filmsData);
+        let newFilmsData: Array<FilmData> = [];
+
+        try {
+            newFilmsData = filmsData;
+        } catch (e) {
+            handleEverythingOkChange(false);
+        }
+
+        setBaseData(newFilmsData);
+        setSearchValue('');
+        setFilterValue('All');
+        setSortData(DEFAULT_SORT);
     }, []);
 
     const handleFiler = (
@@ -69,10 +86,21 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         });
     };
 
+    const handleSearch = (dataToSearch: Array<FilmData>, sValue: string) => {
+        return !sValue
+            ? dataToSearch
+            : dataToSearch.filter((film) => {
+                  return film.title
+                      .toLowerCase()
+                      .includes(sValue.toLowerCase());
+              });
+    };
+
     useEffect(() => {
         if (baseData) {
             const { value, direction } = sortData;
-            const filteredData = handleFiler(baseData, filter);
+            const searchData = handleSearch(baseData, searchValue);
+            const filteredData = handleFiler(searchData, filterValue);
 
             const sortedData = handleSort(
                 filteredData.slice(),
@@ -83,7 +111,7 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         } else {
             setData(undefined);
         }
-    }, [sortData, baseData, filter]);
+    }, [sortData, baseData, filterValue, searchValue]);
 
     const handleSortPerformed = useCallback(
         (title: string, direction: string, value: string) => {
@@ -95,17 +123,16 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     );
 
     return (
-        <div className="home-page">
-            <SearchArea />
+        <>
+            <SearchArea handleSearchPerformed={setSearchValue} />
             <ResultArea
-                handleGenreChange={setFilter}
+                handleGenreChange={setFilterValue}
                 data={data}
                 handleSortPerformed={handleSortPerformed}
                 sortData={sortData}
-                filter={filter}
+                filter={filterValue}
             />
-            <Footer />
-        </div>
+        </>
     );
 };
 

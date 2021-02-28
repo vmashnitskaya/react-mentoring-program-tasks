@@ -1,0 +1,13 @@
+@import "../../constants";
+
+.no-films {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $main-dark;
+  height: 300px;
+
+  h2 {
+    color: $main-white
+  }
+}

@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import ResultActionBar from './ResultActionBar';
 import Results from './Results';
-import { FilmData } from '../../../staticData/filmData';
-
-import './ResultArea.scss';
 import { SortData } from '../HomePage';
+import NoFilmsFound from '../NoFilmsFound';
+import { FilmData } from '../../../staticData/filmData';
+import './ResultArea.scss';
 
 interface ResultAreaProps {
     handleGenreChange: (value: string) => void;
@@ -39,7 +39,11 @@ const ResultArea: FunctionComponent<ResultAreaProps> = ({
                 </span>
                 <span className="found">movies found</span>
             </div>
-            {data && data.length ? <Results filmsData={data} /> : null}
+            {data && data.length ? (
+                <Results filmsData={data} />
+            ) : (
+                <NoFilmsFound />
+            )}
         </div>
     );
 };
