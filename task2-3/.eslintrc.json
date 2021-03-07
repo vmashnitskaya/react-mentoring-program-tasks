@@ -22,6 +22,7 @@
   ],
   "ignorePatterns": [".eslintrc.json"],
   "rules": {
-    "camelcase": "off"
+    "camelcase": "off",
+    "react/destructuring-assignment": "off"
   }
 }

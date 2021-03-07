@@ -1,1 +1,1 @@
-export { default } from './ResultArea';
+export { default } from './ResultArea/ResultArea';

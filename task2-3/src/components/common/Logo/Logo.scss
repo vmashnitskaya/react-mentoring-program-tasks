@@ -1,0 +1,20 @@
+@import "../../../constants";
+
+.logo {
+    position: absolute;
+    top: 24px;
+    left: 60px;
+    color: $main-pink;
+    font-size: 20px;
+    z-index: 2;
+    letter-spacing: 0.5px;
+
+    &:link,
+    &:visited {
+        text-decoration: none;
+    }
+
+    &-netflix {
+        font-weight: 900;
+    }
+}

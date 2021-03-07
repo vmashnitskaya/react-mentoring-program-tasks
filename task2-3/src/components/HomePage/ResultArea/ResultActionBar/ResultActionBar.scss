@@ -1,0 +1,8 @@
+@import "../../../../constants";
+
+.action-bar {
+  border-bottom: 2px solid $main-grey-light;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 22px;
+}

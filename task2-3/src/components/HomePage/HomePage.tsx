@@ -46,7 +46,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({
         setSearchValue('');
         setFilterValue('All');
         setSortData(DEFAULT_SORT);
-    }, []);
+    }, [handleEverythingOkChange]);
 
     const handleFiler = (
         dataToFilter: Array<FilmData>,
@@ -122,15 +122,48 @@ const HomePage: FunctionComponent<HomePageProps> = ({
         [sortData]
     );
 
+    const handleDelete = (index: number) => {
+        setData((prevState) => {
+            if (prevState) {
+                const newArray = prevState.slice();
+                newArray.splice(index, 1);
+                return newArray;
+            }
+            return prevState;
+        });
+    };
+
+    const handleEditSave = (filmData: FilmData, index: number) => {
+        setData((prevState) => {
+            if (prevState) {
+                const newArray = prevState.slice();
+                newArray.splice(index, 1, filmData);
+                return newArray;
+            }
+            return prevState;
+        });
+    };
+
+    const handleNewMovieAdd = (filmData: FilmData) => {
+        setData((prevState) =>
+            prevState ? [...prevState, filmData] : prevState
+        );
+    };
+
     return (
         <>
-            <SearchArea handleSearchPerformed={setSearchValue} />
+            <SearchArea
+                handleSearchPerformed={setSearchValue}
+                handleNewMovieAdd={handleNewMovieAdd}
+            />
             <ResultArea
                 handleGenreChange={setFilterValue}
                 data={data}
                 handleSortPerformed={handleSortPerformed}
                 sortData={sortData}
                 filter={filterValue}
+                handleDelete={handleDelete}
+                handleEditSave={handleEditSave}
             />
         </>
     );

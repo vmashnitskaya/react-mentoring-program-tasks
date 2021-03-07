@@ -1,0 +1,9 @@
+@import "../../../constants";
+
+button {
+  font-size: 20px;
+  border-radius: $main-border-radius;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}

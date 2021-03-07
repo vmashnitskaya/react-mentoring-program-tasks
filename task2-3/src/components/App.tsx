@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import HomePage from './HomePage';
-import Logo from './Logo';
-import Footer from './Footer';
-import ErrorBoundary from './ErrorBoundary';
+import Logo from './common/Logo/Logo';
+import Footer from './common/Footer/Footer';
+import ErrorBoundary from './ErrorBoundary/ErrorBoundary';
 
 const App = (): JSX.Element => {
     const [isEverythingOk, setIsEverythingOk] = useState(true);
