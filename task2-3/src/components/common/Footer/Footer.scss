@@ -1,0 +1,14 @@
+@import "../../../constants";
+
+footer {
+  position: relative;
+  width: 100%;
+  height: 60px;
+  background-color: $main-grey-light;
+
+  .logo {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
