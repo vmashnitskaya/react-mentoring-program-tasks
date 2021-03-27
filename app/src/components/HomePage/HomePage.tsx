@@ -7,17 +7,15 @@ import {
     setDefaultFilterValue,
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
+    handleBaseDataSearch,
+    SortData,
+    handleDataSort,
+    handleDataFiler,
 } from '../../redux/data/dataSlice';
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
 import filmsData, { FilmData } from '../../staticData/filmData';
 import MovieDetails from './MovieDetails';
-
-export interface SortData {
-    title: string;
-    direction: string;
-    value: string;
-}
 
 interface HomePageProps {
     handleEverythingOkChange: (value: boolean) => void;
@@ -55,66 +53,11 @@ const HomePage: FunctionComponent<HomePageProps> = ({
         dispatch(setDefaultSortData());
     }, [handleEverythingOkChange, dispatch]);
 
-    const handleFiler = (
-        dataToFilter: Array<FilmData>,
-        filterToApply: string
-    ): Array<FilmData> => {
-        return filterToApply.toLowerCase() === 'all'
-            ? dataToFilter
-            : dataToFilter.filter((film) =>
-                  film.genres.some((genre) =>
-                      genre.toLowerCase().includes(filterToApply.toLowerCase())
-                  )
-              );
-    };
-
-    const handleSort = (
-        dataToSort: Array<FilmData>,
-        value: string,
-        direction: string
-    ): Array<FilmData> => {
-        return dataToSort.sort((a, b) => {
-            let valueA = a[value as keyof FilmData];
-            let valueB = b[value as keyof FilmData];
-            const directionNumber = direction === 'ascending' ? 1 : -1;
-
-            if (value === 'release_date') {
-                valueA = Number((valueA as string).slice(0, 4));
-                valueB = Number((valueB as string).slice(0, 4));
-            }
-
-            if (valueA < valueB) {
-                return -1 * directionNumber;
-            }
-            if (valueA > valueB) {
-                return 1 * directionNumber;
-            }
-            return 0;
-        });
-    };
-
-    const handleSearch = (dataToSearch: Array<FilmData>, sValue: string) => {
-        return !sValue
-            ? dataToSearch
-            : dataToSearch.filter((film) => {
-                  return film.title
-                      .toLowerCase()
-                      .includes(sValue.toLowerCase());
-              });
-    };
-
     useEffect(() => {
         if (baseData) {
-            const { value, direction } = sortData;
-            const searchData = handleSearch(baseData, searchValue);
-            const filteredData = handleFiler(searchData, filterValue);
-
-            const sortedData = handleSort(
-                filteredData.slice(),
-                value,
-                direction
-            );
-            dispatch(setData(sortedData));
+            dispatch(handleBaseDataSearch({ value: searchValue }));
+            dispatch(handleDataFiler({ value: filterValue }));
+            dispatch(handleDataSort(sortData));
         } else {
             dispatch(setData(undefined));
         }

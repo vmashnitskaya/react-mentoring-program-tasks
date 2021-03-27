@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from 'react';
 import ResultActionBar from '../ResultActionBar/ResultActionBar';
 import Results from '../Results/Results';
-import { SortData } from '../../HomePage';
 import NoFilmsFound from '../../NoFilmsFound/NoFilmsFound';
 import { FilmData } from '../../../../staticData/filmData';
 import './ResultArea.scss';
+import { SortData } from '../../../../redux/data/dataSlice';
 
 interface ResultAreaProps {
     data: Array<FilmData> | undefined;

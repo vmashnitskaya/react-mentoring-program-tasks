@@ -7,16 +7,15 @@ import React, {
 } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
-import { setSortData } from '../../../../redux/data/dataSlice';
+import { setSortData, SortData } from '../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
 import './SortDropdown.scss';
 import sortDataStatic from '../../../../staticData/sortData';
-import { SortData as SortDataSelected } from '../../HomePage';
 
 export const DROPDOWN_CONTAINER_CLASS = 'dropdown-container';
 
 interface SortDropdownProps {
-    sortDataSelected: SortDataSelected;
+    sortDataSelected: SortData;
 }
 
 const SortDropdown: FunctionComponent<SortDropdownProps> = ({

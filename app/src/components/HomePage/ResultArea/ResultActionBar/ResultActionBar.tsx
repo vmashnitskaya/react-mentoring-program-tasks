@@ -2,7 +2,7 @@ import React, { FunctionComponent } from 'react';
 import Tabs from '../Tabs/Tabs';
 import './ResultActionBar.scss';
 import SortDropdown from '../SortDropdown/SortDropdown';
-import { SortData } from '../../HomePage';
+import { SortData } from '../../../../redux/data/dataSlice';
 
 interface ResultActionBarProps {
     sortData: SortData;
