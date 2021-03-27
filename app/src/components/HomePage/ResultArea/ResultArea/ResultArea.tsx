@@ -18,6 +18,7 @@ interface ResultAreaProps {
     filter: string;
     handleDelete: (index: number) => void;
     handleEditSave: (data: FilmData, index: number) => void;
+    handleMovieOpen: (data: FilmData) => void;
 }
 
 const ResultArea: FunctionComponent<ResultAreaProps> = ({
@@ -28,6 +29,7 @@ const ResultArea: FunctionComponent<ResultAreaProps> = ({
     filter,
     handleDelete,
     handleEditSave,
+    handleMovieOpen,
 }): JSX.Element => {
     return (
         <div className="result-area wrapper">
@@ -45,6 +47,7 @@ const ResultArea: FunctionComponent<ResultAreaProps> = ({
             </div>
             {data && data.length ? (
                 <Results
+                    handleMovieOpen={handleMovieOpen}
                     filmsData={data}
                     handleDelete={handleDelete}
                     handleEditSave={handleEditSave}

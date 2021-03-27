@@ -7,6 +7,7 @@ import React, {
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
 import filmsData, { FilmData } from '../../staticData/filmData';
+import MovieDetails from './MovieDetails';
 
 const DEFAULT_SORT = {
     title: 'Release date',
@@ -32,6 +33,9 @@ const HomePage: FunctionComponent<HomePageProps> = ({
     const [sortData, setSortData] = useState<SortData>(DEFAULT_SORT);
     const [filterValue, setFilterValue] = useState<string>('All');
     const [searchValue, setSearchValue] = useState('');
+    const [currentFilmDisplayed, setCurrentFilmDisplayed] = useState<
+        FilmData | undefined
+    >(undefined);
 
     useEffect(() => {
         let newFilmsData: Array<FilmData> = [];
@@ -150,12 +154,29 @@ const HomePage: FunctionComponent<HomePageProps> = ({
         );
     };
 
+    const handleSearchSubmit = (value: string) => {
+        setSearchValue(value);
+        setCurrentFilmDisplayed(undefined);
+    };
+
+    const handleMovieOpen = (film: FilmData) => {
+        setCurrentFilmDisplayed(film);
+    };
+
     return (
         <>
-            <SearchArea
-                handleSearchPerformed={setSearchValue}
-                handleNewMovieAdd={handleNewMovieAdd}
-            />
+            {currentFilmDisplayed ? (
+                <MovieDetails
+                    currentFilmDisplayed={currentFilmDisplayed}
+                    handleSearchSubmit={handleSearchSubmit}
+                />
+            ) : (
+                <SearchArea
+                    handleSearchPerformed={setSearchValue}
+                    handleNewMovieAdd={handleNewMovieAdd}
+                />
+            )}
+
             <ResultArea
                 handleGenreChange={setFilterValue}
                 data={data}
@@ -164,6 +185,7 @@ const HomePage: FunctionComponent<HomePageProps> = ({
                 filter={filterValue}
                 handleDelete={handleDelete}
                 handleEditSave={handleEditSave}
+                handleMovieOpen={handleMovieOpen}
             />
         </>
     );

@@ -1,0 +1,12 @@
+@import "../../../../constants";
+
+.movie-details {
+  min-height: 550px;
+  width: 100%;
+  background-image: url("/public/images/bg.jpg");
+  background-size: cover;
+  border-bottom: 10px solid $main-grey-light;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

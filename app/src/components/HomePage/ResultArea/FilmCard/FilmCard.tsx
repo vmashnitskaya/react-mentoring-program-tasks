@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, KeyboardEvent } from 'react';
 import { FilmData } from '../../../../staticData/filmData';
 import MoreDropdown from '../MoreDropdown/MoreDropdown';
 import './FilmCard.scss';
@@ -8,6 +8,7 @@ interface FilmCardProps {
     index: number;
     handleDelete: (index: number) => void;
     handleEditSave: (data: FilmData, index: number) => void;
+    handleMovieOpen: (data: FilmData) => void;
 }
 
 const FilmCard: FunctionComponent<FilmCardProps> = ({
@@ -15,10 +16,27 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
     index,
     handleDelete,
     handleEditSave,
+    handleMovieOpen,
 }): JSX.Element => {
+    const handleCardSelected = () => {
+        handleMovieOpen(cardInfo);
+    };
+
+    const handleCardSelectedByKeyboard = (e: KeyboardEvent<HTMLDivElement>) => {
+        if (e.code === 'Enter') {
+            handleMovieOpen(cardInfo);
+        }
+    };
+
     return (
         cardInfo && (
-            <div className="card-wrapper">
+            <div
+                className="card-wrapper"
+                tabIndex={0}
+                role="article"
+                onClick={handleCardSelected}
+                onKeyDown={handleCardSelectedByKeyboard}
+            >
                 <MoreDropdown
                     cardIndex={index}
                     handleDelete={handleDelete}
