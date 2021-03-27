@@ -1,16 +1,18 @@
 import React, { FunctionComponent, useState, useRef, ChangeEvent } from 'react';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
+import {
+    resetCurrentFilmDisplayed,
+    setSearchValue,
+} from '../../../../redux/data/dataSlice';
 import './Search.scss';
 import Button from '../../../common/Button/Button';
 import useSearchState from '../../../../hooks/useSearchState';
 
-interface SearchProps {
-    handleSearchSubmit: (value: string) => void;
-}
-
-const Search: FunctionComponent<SearchProps> = ({ handleSearchSubmit }) => {
+const Search: FunctionComponent = () => {
+    const dispatch = useDispatch();
     const [isSearchExpanded, setIsSearchExpanded] = useSearchState(false);
-    const [searchValue, setSearchValue] = useState('');
+    const [search, setSearch] = useState('');
     const inputElement = useRef<HTMLInputElement>(null);
 
     const handleSearchButtonClick = () => {
@@ -20,19 +22,20 @@ const Search: FunctionComponent<SearchProps> = ({ handleSearchSubmit }) => {
                 inputElement.current.focus();
             }
         } else {
-            handleSearchSubmit(searchValue);
+            dispatch(setSearchValue(search));
+            dispatch(resetCurrentFilmDisplayed());
         }
     };
 
     const handleSearchValueChange = (e: ChangeEvent<HTMLInputElement>) => {
         if (e.target) {
             const newValue = e.target.value;
-            setSearchValue(newValue);
+            setSearch(newValue);
         }
     };
 
     const handleFocusOut = () => {
-        if (!searchValue && isSearchExpanded) {
+        if (!search && isSearchExpanded) {
             setIsSearchExpanded(false);
         }
     };
@@ -50,7 +53,7 @@ const Search: FunctionComponent<SearchProps> = ({ handleSearchSubmit }) => {
                 className={clsx('search', isSearchExpanded && 'is-expanded')}
                 type="text"
                 ref={inputElement}
-                value={searchValue}
+                value={search}
                 onChange={handleSearchValueChange}
                 onBlur={handleFocusOut}
             />

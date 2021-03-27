@@ -7,14 +7,8 @@ import { FilmData } from '../../../../staticData/filmData';
 import './ResultArea.scss';
 
 interface ResultAreaProps {
-    handleGenreChange: (value: string) => void;
     data: Array<FilmData> | undefined;
     sortData: SortData;
-    handleSortPerformed: (
-        title: string,
-        direction: string,
-        value: string
-    ) => void;
     filter: string;
     handleDelete: (index: number) => void;
     handleEditSave: (data: FilmData, index: number) => void;
@@ -22,9 +16,7 @@ interface ResultAreaProps {
 }
 
 const ResultArea: FunctionComponent<ResultAreaProps> = ({
-    handleGenreChange,
     data,
-    handleSortPerformed,
     sortData,
     filter,
     handleDelete,
@@ -33,12 +25,7 @@ const ResultArea: FunctionComponent<ResultAreaProps> = ({
 }): JSX.Element => {
     return (
         <div className="result-area wrapper">
-            <ResultActionBar
-                onGenreChanged={handleGenreChange}
-                onSortPerformed={handleSortPerformed}
-                sortData={sortData}
-                filter={filter}
-            />
+            <ResultActionBar sortData={sortData} filter={filter} />
             <div className="result-counter">
                 <span className="counter">
                     {data && data.length ? data.length : 0}

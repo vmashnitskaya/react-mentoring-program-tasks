@@ -4,15 +4,12 @@ import React, {
     useState,
     MouseEvent,
 } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSearchValue } from '../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
 
-interface SearchFormProps {
-    handleSearchPerformed: (searchValue: string) => void;
-}
-
-const SearchForm: FunctionComponent<SearchFormProps> = ({
-    handleSearchPerformed,
-}) => {
+const SearchForm: FunctionComponent = () => {
+    const dispatch = useDispatch();
     const [search, setSearch] = useState<string>('');
 
     const handleFormChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +19,7 @@ const SearchForm: FunctionComponent<SearchFormProps> = ({
 
     const onSearchPerformed = (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        handleSearchPerformed(search.trim());
+        dispatch(setSearchValue(search.trim()));
     };
 
     return (

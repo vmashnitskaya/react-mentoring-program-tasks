@@ -5,23 +5,25 @@ import React, {
     useRef,
     useCallback,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
+import { setSortData } from '../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
 import './SortDropdown.scss';
-import sortData from '../../../../staticData/sortData';
+import sortDataStatic from '../../../../staticData/sortData';
 import { SortData as SortDataSelected } from '../../HomePage';
 
 export const DROPDOWN_CONTAINER_CLASS = 'dropdown-container';
 
 interface SortDropdownProps {
-    onSortPerformed: (title: string, direction: string, value: string) => void;
     sortDataSelected: SortDataSelected;
 }
 
 const SortDropdown: FunctionComponent<SortDropdownProps> = ({
-    onSortPerformed,
     sortDataSelected,
 }): JSX.Element => {
+    const dispatch = useDispatch();
+    const sortData = useSelector((state) => state.data.sortData);
     const [isDropdownClosed, setIsDropdownClosed] = useState<boolean>(true);
     const dropdownElement = useRef<HTMLDivElement>(null);
 
@@ -52,7 +54,9 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
         direction: string,
         value: string
     ): void => {
-        onSortPerformed(title, direction, value);
+        if (direction !== sortData.direction || title !== sortData.title) {
+            dispatch(setSortData({ ...sortData, direction, title, value }));
+        }
         toggleDropdown();
     };
 
@@ -96,7 +100,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                         />
                     </div>
 
-                    {sortData.map((data) => {
+                    {sortDataStatic.map((data) => {
                         return (
                             <li key={`${data.value}_${data.direction}`}>
                                 <Button

@@ -21,12 +21,10 @@ const DEFAULT_VALUE: FilmData = {
 };
 
 interface SearchAreaProps {
-    handleSearchPerformed: (searchValue: string) => void;
     handleNewMovieAdd: (data: FilmData) => void;
 }
 
 const SearchArea: FunctionComponent<SearchAreaProps> = ({
-    handleSearchPerformed,
     handleNewMovieAdd,
 }): JSX.Element => {
     const [newMovie, setNewMovie] = useState<FilmData>(DEFAULT_VALUE);
@@ -90,7 +88,7 @@ const SearchArea: FunctionComponent<SearchAreaProps> = ({
                 </div>
                 <div className="search-area-search">
                     <p className="search-area-title">FIND YOUR MOVIE</p>
-                    <SearchForm handleSearchPerformed={handleSearchPerformed} />
+                    <SearchForm />
                 </div>
             </div>
 
