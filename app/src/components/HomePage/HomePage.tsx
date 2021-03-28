@@ -1,57 +1,38 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    setBaseData,
     setData,
     setDefaultSortData,
     setDefaultFilterValue,
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
     handleBaseDataSearch,
-    SortData,
     handleDataSort,
     handleDataFiler,
+    fetchMovies,
 } from '../../redux/data/dataSlice';
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
-import filmsData, { FilmData } from '../../staticData/filmData';
+import { FilmData } from '../../staticData/filmData';
 import MovieDetails from './MovieDetails';
 
-interface HomePageProps {
-    handleEverythingOkChange: (value: boolean) => void;
-}
-
-const HomePage: FunctionComponent<HomePageProps> = ({
-    handleEverythingOkChange,
-}): JSX.Element => {
+const HomePage: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
-    const baseData: Array<FilmData> = useSelector(
-        (state) => state.data.baseData
-    );
-    const data: Array<FilmData> | undefined = useSelector(
-        (state) => state.data.data
-    );
-    const sortData: SortData = useSelector((state) => state.data.sortData);
-    const filterValue: string = useSelector((state) => state.data.filterValue);
-    const searchValue: string = useSelector((state) => state.data.searchValue);
-    const currentFilmDisplayed: FilmData | undefined = useSelector(
+    const baseData = useSelector((state) => state.data.baseData);
+    const data = useSelector((state) => state.data.data);
+    const sortData = useSelector((state) => state.data.sortData);
+    const filterValue = useSelector((state) => state.data.filterValue);
+    const searchValue = useSelector((state) => state.data.searchValue);
+    const currentFilmDisplayed = useSelector(
         (state) => state.data.currentFilmDisplayed
     );
 
     useEffect(() => {
-        let newFilmsData: Array<FilmData> = [];
-
-        try {
-            newFilmsData = filmsData;
-        } catch (e) {
-            handleEverythingOkChange(false);
-        }
-
-        dispatch(setBaseData(newFilmsData));
+        dispatch(fetchMovies());
         dispatch(setDefaultSearchValue());
         dispatch(setDefaultFilterValue());
         dispatch(setDefaultSortData());
-    }, [handleEverythingOkChange, dispatch]);
+    }, [dispatch]);
 
     useEffect(() => {
         if (baseData) {

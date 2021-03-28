@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import './MovieCard.scss';
 import { FilmData } from '../../../../staticData/filmData';
 
@@ -7,9 +7,23 @@ interface MovieCardProps {
 }
 
 const MovieCard: FunctionComponent<MovieCardProps> = ({ card }) => {
+    const imageRef = useRef<HTMLImageElement | null>(null);
+
+    const handleImageError = () => {
+        if (imageRef && imageRef.current) {
+            imageRef.current.src = 'images/coming-soon.png';
+        }
+    };
+
     return (
         <div className="card">
-            <img className="card-image" src={card.poster_path} alt="poster" />
+            <img
+                ref={imageRef}
+                className="card-image"
+                src={card.poster_path}
+                alt="poster"
+                onError={handleImageError}
+            />
             <div className="card-details">
                 <div className="title">
                     <span className="film-title">{card.title}</span>

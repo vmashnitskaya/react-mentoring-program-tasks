@@ -1,5 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import filmsData, { FilmData } from '../../staticData/filmData';
+import { getMovies } from './movieHttp';
 
 export interface SortData {
     title: string;
@@ -8,6 +9,8 @@ export interface SortData {
 }
 
 interface DataSliceInterface {
+    loading: boolean;
+    error: string;
     baseData: Array<FilmData>;
     data: Array<FilmData>;
     sortData: SortData;
@@ -23,6 +26,8 @@ const DEFAULT_SORT = {
 };
 
 const INITIAL_STATE: DataSliceInterface = {
+    loading: false,
+    error: '',
     baseData: filmsData,
     data: [],
     sortData: DEFAULT_SORT,
@@ -30,6 +35,21 @@ const INITIAL_STATE: DataSliceInterface = {
     searchValue: '',
     currentFilmDisplayed: undefined,
 };
+
+export const fetchMovies = createAsyncThunk('data/fetchBaseData', async () => {
+    const response = await getMovies('http://localhost:4000/movies?limit=100');
+    return response.data;
+});
+
+export const fetchSortedFilteredSearchedMovies = createAsyncThunk(
+    'data/fetchBaseData',
+    async () => {
+        const response = await getMovies(
+            'http://localhost:4000/movies?limit=100'
+        );
+        return response.data;
+    }
+);
 
 export const dataSlice = createSlice({
     name: 'data',
@@ -112,6 +132,20 @@ export const dataSlice = createSlice({
                 return 0;
             });
         },
+    },
+    extraReducers: (builder) => {
+        builder.addCase(fetchMovies.fulfilled, (state, action) => {
+            state.loading = false;
+            state.baseData = action.payload;
+        });
+        builder.addCase(fetchMovies.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchMovies.rejected, (state, action) => {
+            state.loading = false;
+            // @ts-ignore
+            state.error = action.payload.errorMessage;
+        });
     },
 });
 

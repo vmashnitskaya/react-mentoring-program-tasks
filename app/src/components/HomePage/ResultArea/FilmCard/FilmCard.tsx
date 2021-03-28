@@ -1,4 +1,4 @@
-import React, { FunctionComponent, KeyboardEvent } from 'react';
+import React, { FunctionComponent, KeyboardEvent, useRef } from 'react';
 import { FilmData } from '../../../../staticData/filmData';
 import MoreDropdown from '../MoreDropdown/MoreDropdown';
 import './FilmCard.scss';
@@ -18,6 +18,7 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
     handleEditSave,
     handleMovieOpen,
 }): JSX.Element => {
+    const imageRef = useRef<HTMLImageElement | null>(null);
     const handleCardSelected = () => {
         handleMovieOpen(cardInfo);
     };
@@ -25,6 +26,12 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
     const handleCardSelectedByKeyboard = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.code === 'Enter') {
             handleMovieOpen(cardInfo);
+        }
+    };
+
+    const handleImageError = () => {
+        if (imageRef && imageRef.current) {
+            imageRef.current.src = 'images/coming-soon.png';
         }
     };
 
@@ -44,7 +51,12 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
                     handleEditSave={handleEditSave}
                 />
                 <div className="card-image">
-                    <img src={cardInfo.poster_path} alt="poster" />
+                    <img
+                        ref={imageRef}
+                        src={cardInfo.poster_path}
+                        alt="poster"
+                        onError={handleImageError}
+                    />
                 </div>
                 <div className="card-info">
                     <div>
