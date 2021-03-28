@@ -4,7 +4,7 @@ import { resetCurrentFilmDisplayed } from '../../../../redux/data/dataSlice';
 import Search from '../Search/Search';
 import MovieCard from '../MovieCard/MovieCard';
 import './MovieDetails.scss';
-import { FilmData } from '../../../../staticData/filmData';
+import { FilmData } from '../../../filmData';
 import Button from '../../../common/Button/Button';
 
 interface MovieDetailsProps {

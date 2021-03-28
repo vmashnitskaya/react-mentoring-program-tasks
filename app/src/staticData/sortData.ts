@@ -5,10 +5,10 @@ interface SortData {
 }
 
 const sortData: Array<SortData> = [
-    { title: 'Release date', value: 'release_date', direction: 'ascending' },
-    { title: 'Release date', value: 'release_date', direction: 'descending' },
-    { title: 'Title', value: 'title', direction: 'ascending' },
-    { title: 'Title', value: 'title', direction: 'descending' },
+    { title: 'Release date', value: 'release_date', direction: 'asc' },
+    { title: 'Release date', value: 'release_date', direction: 'desc' },
+    { title: 'Vote', value: 'vote_average', direction: 'asc' },
+    { title: 'Vote', value: 'vote_average', direction: 'desc' },
 ];
 
 export default sortData;

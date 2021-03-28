@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
-import '../Modal/Modal';
 import Button from '../Button/Button';
+import '../Modal/Modal';
 import './Select.scss';
 
 interface SelectProps {

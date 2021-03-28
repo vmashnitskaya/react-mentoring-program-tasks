@@ -1,6 +1,6 @@
 import React, { FunctionComponent, useRef } from 'react';
 import './MovieCard.scss';
-import { FilmData } from '../../../../staticData/filmData';
+import { FilmData } from '../../../filmData';
 
 interface MovieCardProps {
     card: FilmData;

@@ -1,6 +1,6 @@
 import React, { FunctionComponent, MouseEvent } from 'react';
-import './Button.scss';
 import clsx from 'clsx';
+import './Button.scss';
 
 interface ButtonProps {
     text: string;

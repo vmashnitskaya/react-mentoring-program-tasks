@@ -1,24 +1,19 @@
 import React, { FunctionComponent, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    setData,
     setDefaultSortData,
     setDefaultFilterValue,
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
-    handleBaseDataSearch,
-    handleDataSort,
-    handleDataFiler,
-    fetchMovies,
+    fetchSortedFilteredSearchedMovies,
 } from '../../redux/data/dataSlice';
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
-import { FilmData } from '../../staticData/filmData';
+import { FilmData } from '../filmData';
 import MovieDetails from './MovieDetails';
 
 const HomePage: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
-    const baseData = useSelector((state) => state.data.baseData);
     const data = useSelector((state) => state.data.data);
     const sortData = useSelector((state) => state.data.sortData);
     const filterValue = useSelector((state) => state.data.filterValue);
@@ -28,51 +23,20 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     );
 
     useEffect(() => {
-        dispatch(fetchMovies());
         dispatch(setDefaultSearchValue());
         dispatch(setDefaultFilterValue());
         dispatch(setDefaultSortData());
     }, [dispatch]);
 
     useEffect(() => {
-        if (baseData) {
-            dispatch(handleBaseDataSearch({ value: searchValue }));
-            dispatch(handleDataFiler({ value: filterValue }));
-            dispatch(handleDataSort(sortData));
-        } else {
-            dispatch(setData(undefined));
-        }
-    }, [sortData, baseData, filterValue, searchValue, dispatch]);
-
-    const handleDelete = (index: number) => {
-        let newData = [];
-        if (data) {
-            const newArray = data.slice();
-            newArray.splice(index, 1);
-            newData = newArray;
-        } else {
-            newData = data;
-        }
-        dispatch(setData(newData));
-    };
-
-    const handleEditSave = (filmData: FilmData, index: number) => {
-        let newData = [];
-
-        if (data) {
-            const newArray = data.slice();
-            newArray.splice(index, 1, filmData);
-            newData = newArray;
-        } else {
-            newData = data;
-        }
-        dispatch(setData(newData));
-    };
-
-    const handleNewMovieAdd = (filmData: FilmData) => {
-        const newData = data ? [...data, filmData] : data;
-        dispatch(setData(newData));
-    };
+        dispatch(
+            fetchSortedFilteredSearchedMovies({
+                searchValue,
+                filterValue,
+                sortData,
+            })
+        );
+    }, [sortData, filterValue, searchValue, dispatch]);
 
     const handleMovieOpen = (film: FilmData) => {
         dispatch(setCurrentFilmDisplayed(film));
@@ -83,15 +47,13 @@ const HomePage: FunctionComponent = (): JSX.Element => {
             {currentFilmDisplayed ? (
                 <MovieDetails currentFilmDisplayed={currentFilmDisplayed} />
             ) : (
-                <SearchArea handleNewMovieAdd={handleNewMovieAdd} />
+                <SearchArea />
             )}
 
             <ResultArea
                 data={data}
                 sortData={sortData}
                 filter={filterValue}
-                handleDelete={handleDelete}
-                handleEditSave={handleEditSave}
                 handleMovieOpen={handleMovieOpen}
             />
         </>

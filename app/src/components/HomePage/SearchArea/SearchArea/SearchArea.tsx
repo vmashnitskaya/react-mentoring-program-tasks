@@ -1,12 +1,15 @@
 import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addMovie } from '../../../../redux/data/dataSlice';
 import './SearchArea.scss';
 import SearchForm from '../SearchForm/SearchForm';
 import Button from '../../../common/Button/Button';
-import { FilmData } from '../../../../staticData/filmData';
+import { FilmData } from '../../../filmData';
 import ModifyModal from '../../ModifyModal/ModifyModal';
+import { toggleOverflowHidden } from '../../../utils/toggleOverflowHidden';
 
 const DEFAULT_VALUE: FilmData = {
-    id: Math.floor(Math.random() * Math.floor(10000000000)),
+    id: 0,
     title: '',
     tagline: '',
     vote_average: 0,
@@ -20,13 +23,8 @@ const DEFAULT_VALUE: FilmData = {
     runtime: 0,
 };
 
-interface SearchAreaProps {
-    handleNewMovieAdd: (data: FilmData) => void;
-}
-
-const SearchArea: FunctionComponent<SearchAreaProps> = ({
-    handleNewMovieAdd,
-}): JSX.Element => {
+const SearchArea: FunctionComponent = (): JSX.Element => {
+    const dispatch = useDispatch();
     const [newMovie, setNewMovie] = useState<FilmData>(DEFAULT_VALUE);
     const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
 
@@ -35,23 +33,18 @@ const SearchArea: FunctionComponent<SearchAreaProps> = ({
         setNewMovie((prevState) => ({ ...prevState, [field]: newValue }));
     };
 
-    const setOverflowHidden = (newState: boolean) => {
-        const body = document.querySelector('body');
-        const isOverflowHiddenClass = 'is-overflow-hidden';
-
-        if (body) {
-            if (newState) {
-                body.classList.add(isOverflowHiddenClass);
-            } else {
-                body.classList.remove(isOverflowHiddenClass);
-            }
-        }
+    const handleNumberValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value: newValue, id: field } = event.target;
+        setNewMovie((prevState) => ({
+            ...prevState,
+            [field]: Number(newValue),
+        }));
     };
 
     const toggleModal = () => {
         const newIsAddModalOpened = !isAddModalOpened;
         setIsAddModalOpened(newIsAddModalOpened);
-        setOverflowHidden(newIsAddModalOpened);
+        toggleOverflowHidden();
     };
 
     const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>) => {
@@ -76,7 +69,7 @@ const SearchArea: FunctionComponent<SearchAreaProps> = ({
 
     const handleNewMovieSave = () => {
         toggleModal();
-        handleNewMovieAdd(newMovie);
+        dispatch(addMovie(newMovie));
         setNewMovie(DEFAULT_VALUE);
     };
 
@@ -97,6 +90,7 @@ const SearchArea: FunctionComponent<SearchAreaProps> = ({
                     toggleModalClose={toggleModal}
                     newMovieData={newMovie}
                     onValueChanged={handleValueChanged}
+                    onNumberValueChanged={handleNumberValueChanged}
                     handleCheckboxChecked={handleCheckboxChecked}
                     handleEditReset={handleEditReset}
                     handleNewMovieSave={handleNewMovieSave}

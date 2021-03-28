@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import filmsData, { FilmData } from '../../staticData/filmData';
-import { getMovies } from './movieHttp';
+import { FilmData } from '../../components/filmData';
+import fetchMovies from './movieHttp';
 
 export interface SortData {
     title: string;
@@ -10,8 +10,7 @@ export interface SortData {
 
 interface DataSliceInterface {
     loading: boolean;
-    error: string;
-    baseData: Array<FilmData>;
+    error: string | undefined;
     data: Array<FilmData>;
     sortData: SortData;
     filterValue: string;
@@ -21,14 +20,13 @@ interface DataSliceInterface {
 
 const DEFAULT_SORT = {
     title: 'Release date',
-    direction: 'ascending',
+    direction: 'asc',
     value: 'release_date',
 };
 
 const INITIAL_STATE: DataSliceInterface = {
     loading: false,
     error: '',
-    baseData: filmsData,
     data: [],
     sortData: DEFAULT_SORT,
     filterValue: 'All',
@@ -36,18 +34,71 @@ const INITIAL_STATE: DataSliceInterface = {
     currentFilmDisplayed: undefined,
 };
 
-export const fetchMovies = createAsyncThunk('data/fetchBaseData', async () => {
-    const response = await getMovies('http://localhost:4000/movies?limit=100');
+export const fetchSortedFilteredSearchedMovies = createAsyncThunk<
+    Array<FilmData>,
+    {
+        searchValue: string;
+        filterValue: string;
+        sortData: SortData;
+    }
+>('data/fetchCustomData', async (args) => {
+    const { searchValue, filterValue, sortData } = args;
+    let url = 'http://localhost:4000/movies?';
+
+    url += searchValue ? `search=${searchValue}&searchBy=title&` : '';
+    url +=
+        filterValue && filterValue.toLowerCase() !== 'all'
+            ? `filter=${filterValue}&`
+            : '';
+    url += sortData
+        ? `sortBy=${sortData.value}&sortOrder=${sortData.direction}&`
+        : '';
+    url += 'limit=200';
+
+    const response = await fetchMovies(encodeURI(url));
     return response.data;
 });
 
-export const fetchSortedFilteredSearchedMovies = createAsyncThunk(
-    'data/fetchBaseData',
-    async () => {
-        const response = await getMovies(
-            'http://localhost:4000/movies?limit=100'
-        );
-        return response.data;
+const fetchUpdatedData = (state: any, dispatch: any) => {
+    const { searchValue, filterValue, sortData } = state;
+
+    dispatch(
+        fetchSortedFilteredSearchedMovies({
+            searchValue,
+            filterValue,
+            sortData,
+        })
+    );
+};
+
+export const deleteMovie = createAsyncThunk<void, number, { state: any }>(
+    'data/deleteMovie',
+    async (id, { getState, dispatch }) => {
+        const url = `http://localhost:4000/movies/${id}`;
+        await fetchMovies(encodeURI(url), 'DELETE');
+
+        fetchUpdatedData(getState().data, dispatch);
+    }
+);
+
+export const updateMovie = createAsyncThunk<void, FilmData, { state: any }>(
+    'data/updateMovie',
+    async (film, { getState, dispatch }) => {
+        const url = `http://localhost:4000/movies`;
+        await fetchMovies(encodeURI(url), 'PUT', film);
+
+        fetchUpdatedData(getState().data, dispatch);
+    }
+);
+
+export const addMovie = createAsyncThunk<void, FilmData, { state: any }>(
+    'data/addMovie',
+    async (film, { getState, dispatch }) => {
+        const { id, ...filmData } = film;
+        const url = `http://localhost:4000/movies`;
+        await fetchMovies(encodeURI(url), 'POST', filmData);
+
+        fetchUpdatedData(getState().data, dispatch);
     }
 );
 
@@ -55,12 +106,6 @@ export const dataSlice = createSlice({
     name: 'data',
     initialState: INITIAL_STATE,
     reducers: {
-        setBaseData: (state, action) => {
-            state.baseData = action.payload;
-        },
-        setData: (state, action) => {
-            state.data = action.payload;
-        },
         setSortData: (state, action) => {
             state.sortData = action.payload;
         },
@@ -85,73 +130,61 @@ export const dataSlice = createSlice({
         resetCurrentFilmDisplayed: (state) => {
             state.currentFilmDisplayed = undefined;
         },
-        handleBaseDataSearch: (state, action) => {
-            if (action.payload.value) {
-                state.data = state.baseData.filter((film) => {
-                    return film.title
-                        .toLowerCase()
-                        .includes(action.payload.value.toLowerCase());
-                });
-            } else {
-                state.data = state.baseData;
-            }
-        },
-        handleDataFiler: (state, action) => {
-            const filterToApply = action.payload.value;
-            state.data =
-                filterToApply.toLowerCase() === 'all'
-                    ? state.data
-                    : state.data.filter((film) =>
-                          film.genres.some((genre) =>
-                              genre
-                                  .toLowerCase()
-                                  .includes(filterToApply.toLowerCase())
-                          )
-                      );
-        },
-        handleDataSort: (state, action) => {
-            const { value, direction } = action.payload;
-            const dataToSort = state.data.slice();
-
-            state.data = dataToSort.sort((a, b) => {
-                let valueA = a[value as keyof FilmData];
-                let valueB = b[value as keyof FilmData];
-                const directionNumber = direction === 'ascending' ? 1 : -1;
-
-                if (value === 'release_date') {
-                    valueA = Number((valueA as string).slice(0, 4));
-                    valueB = Number((valueB as string).slice(0, 4));
-                }
-
-                if (valueA < valueB) {
-                    return -1 * directionNumber;
-                }
-                if (valueA > valueB) {
-                    return 1 * directionNumber;
-                }
-                return 0;
-            });
-        },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchMovies.fulfilled, (state, action) => {
-            state.loading = false;
-            state.baseData = action.payload;
-        });
-        builder.addCase(fetchMovies.pending, (state) => {
+        builder.addCase(
+            fetchSortedFilteredSearchedMovies.fulfilled,
+            (state, action) => {
+                state.loading = false;
+                state.data = action.payload;
+            }
+        );
+        builder.addCase(fetchSortedFilteredSearchedMovies.pending, (state) => {
             state.loading = true;
         });
-        builder.addCase(fetchMovies.rejected, (state, action) => {
+        builder.addCase(
+            fetchSortedFilteredSearchedMovies.rejected,
+            (state, action) => {
+                state.loading = false;
+                state.error = action.error.message;
+            }
+        );
+        builder.addCase(deleteMovie.fulfilled, (state) => {
             state.loading = false;
-            // @ts-ignore
-            state.error = action.payload.errorMessage;
+            state.currentFilmDisplayed = undefined;
+        });
+        builder.addCase(deleteMovie.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(deleteMovie.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        });
+        builder.addCase(updateMovie.fulfilled, (state) => {
+            state.loading = false;
+            state.currentFilmDisplayed = undefined;
+        });
+        builder.addCase(updateMovie.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(updateMovie.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        });
+        builder.addCase(addMovie.fulfilled, (state) => {
+            state.loading = false;
+        });
+        builder.addCase(addMovie.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(addMovie.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
         });
     },
 });
 
 export const {
-    setBaseData,
-    setData,
     setSortData,
     setDefaultSortData,
     setFilterValue,
@@ -160,9 +193,6 @@ export const {
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
     resetCurrentFilmDisplayed,
-    handleBaseDataSearch,
-    handleDataFiler,
-    handleDataSort,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

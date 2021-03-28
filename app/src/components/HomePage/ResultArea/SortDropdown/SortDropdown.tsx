@@ -70,7 +70,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                     onClick={toggleDropdown}
                 >
                     <span className="material-icons direction">
-                        {sortDataSelected.direction === 'ascending'
+                        {sortDataSelected.direction === 'asc'
                             ? 'south'
                             : 'north'}
                     </span>
@@ -115,7 +115,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                                     }
                                 >
                                     <span className="material-icons direction">
-                                        {data.direction === 'ascending'
+                                        {data.direction === 'asc'
                                             ? 'south'
                                             : 'north'}
                                     </span>
