@@ -2,6 +2,8 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FilmData } from '../../components/filmData';
 import fetchMovies from './movieHttp';
 
+const URL = 'http://localhost:4000/movies';
+
 export interface SortData {
     title: string;
     direction: string;
@@ -43,7 +45,7 @@ export const fetchSortedFilteredSearchedMovies = createAsyncThunk<
     }
 >('data/fetchCustomData', async (args) => {
     const { searchValue, filterValue, sortData } = args;
-    let url = 'http://localhost:4000/movies?';
+    let url = `${URL}?`;
 
     url += searchValue ? `search=${searchValue}&searchBy=title&` : '';
     url +=
@@ -74,7 +76,7 @@ const fetchUpdatedData = (state: any, dispatch: any) => {
 export const deleteMovie = createAsyncThunk<void, number, { state: any }>(
     'data/deleteMovie',
     async (id, { getState, dispatch }) => {
-        const url = `http://localhost:4000/movies/${id}`;
+        const url = `${URL}/${id}`;
         await fetchMovies(encodeURI(url), 'DELETE');
 
         fetchUpdatedData(getState().data, dispatch);
@@ -84,8 +86,7 @@ export const deleteMovie = createAsyncThunk<void, number, { state: any }>(
 export const updateMovie = createAsyncThunk<void, FilmData, { state: any }>(
     'data/updateMovie',
     async (film, { getState, dispatch }) => {
-        const url = `http://localhost:4000/movies`;
-        await fetchMovies(encodeURI(url), 'PUT', film);
+        await fetchMovies(encodeURI(URL), 'PUT', film);
 
         fetchUpdatedData(getState().data, dispatch);
     }
@@ -95,8 +96,8 @@ export const addMovie = createAsyncThunk<void, FilmData, { state: any }>(
     'data/addMovie',
     async (film, { getState, dispatch }) => {
         const { id, ...filmData } = film;
-        const url = `http://localhost:4000/movies`;
-        await fetchMovies(encodeURI(url), 'POST', filmData);
+
+        await fetchMovies(encodeURI(URL), 'POST', filmData);
 
         fetchUpdatedData(getState().data, dispatch);
     }
