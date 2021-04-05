@@ -7,27 +7,23 @@ import React, {
     useState,
 } from 'react';
 import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
+import { deleteMovie, updateMovie } from '../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
-import { FilmData } from '../../../../staticData/filmData';
+import { FilmData } from '../../../filmData';
 import DeleteModal from '../DeleteModal/DeleteModal';
 import './MoreDropdown.scss';
 import ModifyModal from '../../ModifyModal/ModifyModal';
+import { toggleOverflowHidden } from '../../../utils/toggleOverflowHidden';
 
 const MORE_DROPDOWN_CONTAINER_CLASS = 'more-dropdown-container-class';
 
 interface MoreDropdownProps {
-    cardIndex: number;
-    handleDelete: (index: number) => void;
     cardInfo: FilmData;
-    handleEditSave: (data: FilmData, index: number) => void;
 }
 
-const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({
-    cardIndex,
-    handleDelete,
-    cardInfo,
-    handleEditSave,
-}) => {
+const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({ cardInfo }) => {
+    const dispatch = useDispatch();
     const [isMoreDropdownClosed, setIsMoreDropdownClosed] = useState<boolean>(
         true
     );
@@ -64,41 +60,37 @@ const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({
         setIsMoreDropdownClosed(!isMoreDropdownClosed);
     };
 
-    const setOverflowHidden = (newState: boolean) => {
-        const body = document.querySelector('body');
-        const isOverflowHiddenClass = 'is-overflow-hidden';
-
-        if (body) {
-            if (newState) {
-                body.classList.add(isOverflowHiddenClass);
-            } else {
-                body.classList.remove(isOverflowHiddenClass);
-            }
-        }
-    };
-
     const toggleDeleteModal = () => {
         const newIsEditModalOpened = !isDeleteModalOpened;
         setIsDeleteModalOpened(newIsEditModalOpened);
 
-        setOverflowHidden(newIsEditModalOpened);
+        toggleOverflowHidden();
     };
 
     const onMovieDelete = () => {
-        handleDelete(cardIndex);
+        if (cardInfo && cardInfo.id) {
+            dispatch(deleteMovie(cardInfo.id));
+        }
         toggleDeleteModal();
     };
 
     const toggleEditModal = () => {
         const newIsEditModalOpened = !isEditModalOpened;
         setIsEditModalOpened(newIsEditModalOpened);
-
-        setOverflowHidden(newIsEditModalOpened);
+        toggleOverflowHidden();
     };
 
     const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
         const { value: newValue, id: field } = event.target;
         setNewMovieData((prevState) => ({ ...prevState, [field]: newValue }));
+    };
+
+    const onNumberValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
+        const { value: newValue, id: field } = event.target;
+        setNewMovieData((prevState) => ({
+            ...prevState,
+            [field]: Number(newValue),
+        }));
     };
 
     const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>) => {
@@ -118,7 +110,7 @@ const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({
     };
 
     const onEditSave = () => {
-        handleEditSave(newMovieData, cardIndex);
+        dispatch(updateMovie(newMovieData));
         toggleEditModal();
     };
 
@@ -189,6 +181,7 @@ const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({
                     toggleModalClose={toggleEditModal}
                     newMovieData={newMovieData}
                     onValueChanged={onValueChanged}
+                    onNumberValueChanged={onNumberValueChanged}
                     handleCheckboxChecked={handleCheckboxChecked}
                     handleEditSave={onEditSave}
                     handleEditReset={handleEditReset}

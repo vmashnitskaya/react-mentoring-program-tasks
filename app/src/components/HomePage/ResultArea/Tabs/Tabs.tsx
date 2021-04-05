@@ -1,15 +1,17 @@
 import React, { FunctionComponent } from 'react';
+import { useDispatch } from 'react-redux';
+import { setFilterValue } from '../../../../redux/data/dataSlice';
 import tabsHeaders from '../../../../staticData/tabsHeaders';
 import './Tabs.scss';
 import Button from '../../../common/Button/Button';
 import clsx from 'clsx';
 
 interface TabsProps {
-    onGenreChanged: (value: string) => void;
     filter: string;
 }
 
-const Tabs: FunctionComponent<TabsProps> = ({ onGenreChanged, filter }) => {
+const Tabs: FunctionComponent<TabsProps> = ({ filter }) => {
+    const dispatch = useDispatch();
     return (
         <ul className="tabs">
             {tabsHeaders.map((header) => (
@@ -19,7 +21,7 @@ const Tabs: FunctionComponent<TabsProps> = ({ onGenreChanged, filter }) => {
                 >
                     <Button
                         text={header}
-                        onClick={() => onGenreChanged(header)}
+                        onClick={() => dispatch(setFilterValue(header))}
                     />
                 </li>
             ))}

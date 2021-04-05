@@ -1,13 +1,14 @@
 import React, { ChangeEvent, FunctionComponent } from 'react';
 import Select from '../../common/Select/Select';
 import Button from '../../common/Button/Button';
-import { FilmData } from '../../../staticData/filmData';
+import { FilmData } from '../../filmData';
 import selectCategory from '../../../staticData/select';
 import Modal from '../../common/Modal/Modal';
 
 interface EditModalProps {
     toggleModalClose: () => void;
     newMovieData: FilmData;
+    onNumberValueChanged: (event: ChangeEvent<HTMLInputElement>) => void;
     onValueChanged: (event: ChangeEvent<HTMLInputElement>) => void;
     handleCheckboxChecked: (event: ChangeEvent<HTMLInputElement>) => void;
     handleEditReset?: () => void;
@@ -19,6 +20,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
     toggleModalClose,
     newMovieData,
     onValueChanged,
+    onNumberValueChanged,
     handleCheckboxChecked,
     handleEditReset,
     handleEditSave,
@@ -29,22 +31,44 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
             <>
                 <div className="modal-body">
                     <form>
-                        <label htmlFor="id">
-                            Movie Id
-                            <input
-                                id="id"
-                                value={newMovieData.id}
-                                onChange={onValueChanged}
-                                disabled
-                            />
-                        </label>
-
                         <label htmlFor="title">
                             Title
                             <input
                                 id="title"
                                 value={newMovieData.title}
                                 onChange={onValueChanged}
+                            />
+                        </label>
+
+                        <label htmlFor="tagline">
+                            Tagline
+                            <input
+                                id="tagline"
+                                value={newMovieData.tagline}
+                                onChange={onValueChanged}
+                            />
+                        </label>
+
+                        <label htmlFor="vote_average">
+                            Vote average
+                            <input
+                                id="vote_average"
+                                value={newMovieData.vote_average}
+                                onChange={onNumberValueChanged}
+                                type="number"
+                                max="100"
+                                min="0"
+                            />
+                        </label>
+
+                        <label htmlFor="vote_count">
+                            Vote count
+                            <input
+                                id="vote_count"
+                                value={newMovieData.vote_count}
+                                onChange={onNumberValueChanged}
+                                type="number"
+                                min="0"
                             />
                         </label>
 
@@ -59,7 +83,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
                         </label>
 
                         <label htmlFor="poster_path">
-                            Movie URL
+                            Poster URL
                             <input
                                 id="poster_path"
                                 value={newMovieData.poster_path}
@@ -113,7 +137,9 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
                             <input
                                 id="runtime"
                                 value={newMovieData.runtime}
-                                onChange={onValueChanged}
+                                onChange={onNumberValueChanged}
+                                type="number"
+                                min="0"
                             />
                         </label>
                     </form>

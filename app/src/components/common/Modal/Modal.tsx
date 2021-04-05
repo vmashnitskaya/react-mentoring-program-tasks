@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import ReactDOM from 'react-dom';
-import './Modal.scss';
 import Button from '../Button/Button';
+import './Modal.scss';
 
 const modalRoot = document.getElementById('modal-root') as HTMLElement;
 

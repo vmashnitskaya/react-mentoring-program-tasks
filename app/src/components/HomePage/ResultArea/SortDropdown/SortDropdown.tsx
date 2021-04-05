@@ -5,23 +5,24 @@ import React, {
     useRef,
     useCallback,
 } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
+import { setSortData, SortData } from '../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
 import './SortDropdown.scss';
-import sortData from '../../../../staticData/sortData';
-import { SortData as SortDataSelected } from '../../HomePage';
+import sortDataStatic from '../../../../staticData/sortData';
 
 export const DROPDOWN_CONTAINER_CLASS = 'dropdown-container';
 
 interface SortDropdownProps {
-    onSortPerformed: (title: string, direction: string, value: string) => void;
-    sortDataSelected: SortDataSelected;
+    sortDataSelected: SortData;
 }
 
 const SortDropdown: FunctionComponent<SortDropdownProps> = ({
-    onSortPerformed,
     sortDataSelected,
 }): JSX.Element => {
+    const dispatch = useDispatch();
+    const sortData = useSelector((state) => state.data.sortData);
     const [isDropdownClosed, setIsDropdownClosed] = useState<boolean>(true);
     const dropdownElement = useRef<HTMLDivElement>(null);
 
@@ -52,7 +53,9 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
         direction: string,
         value: string
     ): void => {
-        onSortPerformed(title, direction, value);
+        if (direction !== sortData.direction || title !== sortData.title) {
+            dispatch(setSortData({ ...sortData, direction, title, value }));
+        }
         toggleDropdown();
     };
 
@@ -67,7 +70,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                     onClick={toggleDropdown}
                 >
                     <span className="material-icons direction">
-                        {sortDataSelected.direction === 'ascending'
+                        {sortDataSelected.direction === 'asc'
                             ? 'south'
                             : 'north'}
                     </span>
@@ -96,7 +99,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                         />
                     </div>
 
-                    {sortData.map((data) => {
+                    {sortDataStatic.map((data) => {
                         return (
                             <li key={`${data.value}_${data.direction}`}>
                                 <Button
@@ -112,7 +115,7 @@ const SortDropdown: FunctionComponent<SortDropdownProps> = ({
                                     }
                                 >
                                     <span className="material-icons direction">
-                                        {data.direction === 'ascending'
+                                        {data.direction === 'asc'
                                             ? 'south'
                                             : 'north'}
                                     </span>

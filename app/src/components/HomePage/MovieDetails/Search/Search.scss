@@ -1,11 +1,9 @@
 @import "../../../../constants";
 
 .search-input {
-  position: absolute;
-  right: 60px;
-  top: 24px;
   display: flex;
   align-items: center;
+  margin-right: 10px;
 
   .material-icons {
     color: $main-pink;

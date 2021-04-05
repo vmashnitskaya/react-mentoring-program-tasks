@@ -9,4 +9,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  .actions {
+    position: absolute;
+    right: 60px;
+    top: 24px;
+    display: flex;
+  }
+
+  .back {
+    padding: 8px;
+    font-size: 30px;
+    border-radius: 50%;
+    color: $main-pink;
+    background-color: rgba(66, 66, 66, 0.4);
+
+    &:hover {
+      background-color: rgba(66, 66, 66, 0.6);
+    }
+
+    &:active {
+      transform: scale(0.98);
+      background-color: rgba(66, 66, 66, 0.6);
+    }
+  }
 }
