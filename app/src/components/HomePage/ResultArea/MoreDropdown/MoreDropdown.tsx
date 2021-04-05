@@ -1,5 +1,4 @@
 import React, {
-    ChangeEvent,
     FunctionComponent,
     useCallback,
     useEffect,
@@ -80,37 +79,8 @@ const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({ cardInfo }) => {
         toggleOverflowHidden();
     };
 
-    const onValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: newValue, id: field } = event.target;
-        setNewMovieData((prevState) => ({ ...prevState, [field]: newValue }));
-    };
-
-    const onNumberValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: newValue, id: field } = event.target;
-        setNewMovieData((prevState) => ({
-            ...prevState,
-            [field]: Number(newValue),
-        }));
-    };
-
-    const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: checkboxValue, checked } = event.target;
-
-        if (checked) {
-            setNewMovieData((prevState) => ({
-                ...prevState,
-                genres: [...prevState.genres, checkboxValue],
-            }));
-        } else {
-            setNewMovieData((prevState) => ({
-                ...prevState,
-                genres: prevState.genres.filter((el) => el !== checkboxValue),
-            }));
-        }
-    };
-
-    const onEditSave = () => {
-        dispatch(updateMovie(newMovieData));
+    const onEditSave = (filmValue: FilmData) => {
+        dispatch(updateMovie(filmValue));
         toggleEditModal();
     };
 
@@ -180,9 +150,6 @@ const MoreDropdown: FunctionComponent<MoreDropdownProps> = ({ cardInfo }) => {
                 <ModifyModal
                     toggleModalClose={toggleEditModal}
                     newMovieData={newMovieData}
-                    onValueChanged={onValueChanged}
-                    onNumberValueChanged={onNumberValueChanged}
-                    handleCheckboxChecked={handleCheckboxChecked}
                     handleEditSave={onEditSave}
                     handleEditReset={handleEditReset}
                 />

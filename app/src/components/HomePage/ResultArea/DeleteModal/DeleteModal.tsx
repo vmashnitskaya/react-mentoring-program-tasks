@@ -20,7 +20,7 @@ const DeleteModal: FunctionComponent<DeleteModalProps> = ({
                 <div className="modal-body">
                     <p>Are you sure to delete this movie?</p>
                 </div>
-                <div className="modal-footer">
+                <div className="modal-actions">
                     <Button
                         text="Confirm"
                         className="confirm-delete"

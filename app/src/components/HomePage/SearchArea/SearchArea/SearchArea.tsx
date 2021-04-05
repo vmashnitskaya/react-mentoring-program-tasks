@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FunctionComponent, useState } from 'react';
+import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addMovie } from '../../../../redux/data/dataSlice';
 import './SearchArea.scss';
@@ -28,48 +28,19 @@ const SearchArea: FunctionComponent = (): JSX.Element => {
     const [newMovie, setNewMovie] = useState<FilmData>(DEFAULT_VALUE);
     const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);
 
-    const handleValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: newValue, id: field } = event.target;
-        setNewMovie((prevState) => ({ ...prevState, [field]: newValue }));
-    };
-
-    const handleNumberValueChanged = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: newValue, id: field } = event.target;
-        setNewMovie((prevState) => ({
-            ...prevState,
-            [field]: Number(newValue),
-        }));
-    };
-
     const toggleModal = () => {
         const newIsAddModalOpened = !isAddModalOpened;
         setIsAddModalOpened(newIsAddModalOpened);
         toggleOverflowHidden();
     };
 
-    const handleCheckboxChecked = (event: ChangeEvent<HTMLInputElement>) => {
-        const { value: checkboxValue, checked } = event.target;
-
-        if (checked) {
-            setNewMovie((prevState) => ({
-                ...prevState,
-                genres: [...prevState.genres, checkboxValue],
-            }));
-        } else {
-            setNewMovie((prevState) => ({
-                ...prevState,
-                genres: prevState.genres.filter((el) => el !== checkboxValue),
-            }));
-        }
-    };
-
     const handleEditReset = () => {
         setNewMovie(DEFAULT_VALUE);
     };
 
-    const handleNewMovieSave = () => {
+    const handleNewMovieSave = (filmValue: FilmData) => {
         toggleModal();
-        dispatch(addMovie(newMovie));
+        dispatch(addMovie(filmValue));
         setNewMovie(DEFAULT_VALUE);
     };
 
@@ -89,9 +60,6 @@ const SearchArea: FunctionComponent = (): JSX.Element => {
                 <ModifyModal
                     toggleModalClose={toggleModal}
                     newMovieData={newMovie}
-                    onValueChanged={handleValueChanged}
-                    onNumberValueChanged={handleNumberValueChanged}
-                    handleCheckboxChecked={handleCheckboxChecked}
                     handleEditReset={handleEditReset}
                     handleNewMovieSave={handleNewMovieSave}
                 />
