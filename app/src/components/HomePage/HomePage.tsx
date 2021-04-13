@@ -1,16 +1,22 @@
 import React, { FunctionComponent, useEffect } from 'react';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect
+} from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import {
     setDefaultSortData,
     setDefaultFilterValue,
     setDefaultSearchValue,
-    setCurrentFilmDisplayed,
-    fetchSortedFilteredSearchedMovies,
+    fetchSortedFilteredSearchedMovies
 } from '../../redux/data/dataSlice';
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
-import { FilmData } from '../filmData';
 import MovieDetails from './MovieDetails';
+import NoFilmsFound from "./NoFilmsFound/NoFilmsFound";
+import ErrorPage404 from "./ErrorPage404/ErrorPage404";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -18,9 +24,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const sortData = useSelector((state) => state.data.sortData);
     const filterValue = useSelector((state) => state.data.filterValue);
     const searchValue = useSelector((state) => state.data.searchValue);
-    const currentFilmDisplayed = useSelector(
-        (state) => state.data.currentFilmDisplayed
-    );
 
     useEffect(() => {
         dispatch(setDefaultSearchValue());
@@ -38,25 +41,42 @@ const HomePage: FunctionComponent = (): JSX.Element => {
         );
     }, [sortData, filterValue, searchValue, dispatch]);
 
-    const handleMovieOpen = (film: FilmData) => {
-        dispatch(setCurrentFilmDisplayed(film));
-    };
-
     return (
-        <>
-            {currentFilmDisplayed ? (
-                <MovieDetails currentFilmDisplayed={currentFilmDisplayed} />
-            ) : (
-                <SearchArea />
-            )}
-
-            <ResultArea
-                data={data}
-                sortData={sortData}
-                filter={filterValue}
-                handleMovieOpen={handleMovieOpen}
-            />
-        </>
+            <Router basename="/">
+                    <Switch>
+                        <Route path="/home" render={() =>
+                            <>
+                                <SearchArea />
+                                <ResultArea
+                                    data={data}
+                                    sortData={sortData}
+                                    filter={filterValue}
+                                />
+                            </>
+                        } />
+                        <Route path="/film/:id" render={(props) =>
+                            <>
+                                <MovieDetails {...props}/>
+                                <ResultArea
+                                    data={data}
+                                    sortData={sortData}
+                                    filter={filterValue}
+                                />
+                            </>
+                        } />
+                        <Route path="/not_found" render={() =>
+                            <>
+                                <SearchArea />
+                                <NoFilmsFound />
+                            </>
+                        } />
+                        <Route path="/error_404">
+                            <ErrorPage404 />
+                        </Route>
+                        <Redirect exact from="/" to="/not_found" />
+                        <Redirect to="/error_404" />
+                    </Switch>
+            </Router>
     );
 };
 

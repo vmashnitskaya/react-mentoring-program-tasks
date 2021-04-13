@@ -2,30 +2,31 @@ import React, { FunctionComponent, KeyboardEvent, useRef } from 'react';
 import { FilmData } from '../../../filmData';
 import MoreDropdown from '../MoreDropdown/MoreDropdown';
 import './FilmCard.scss';
+import {useHistory} from "react-router";
 
 interface FilmCardProps {
     cardInfo: FilmData;
-    handleMovieOpen: (data: FilmData) => void;
 }
 
 const FilmCard: FunctionComponent<FilmCardProps> = ({
     cardInfo,
-    handleMovieOpen,
 }): JSX.Element => {
     const imageRef = useRef<HTMLImageElement | null>(null);
+    const history = useHistory();
+
     const handleCardSelected = () => {
-        handleMovieOpen(cardInfo);
+        history.push(`/film/${cardInfo.id}`);
     };
 
     const handleCardSelectedByKeyboard = (e: KeyboardEvent<HTMLDivElement>) => {
         if (e.code === 'Enter') {
-            handleMovieOpen(cardInfo);
+            history.push(`/film/${cardInfo.id}`);
         }
     };
 
     const handleImageError = () => {
         if (imageRef && imageRef.current) {
-            imageRef.current.src = 'images/coming-soon.png';
+            imageRef.current.src = '/images/coming-soon.png';
         }
     };
 

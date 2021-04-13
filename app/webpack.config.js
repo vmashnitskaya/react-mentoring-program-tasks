@@ -14,6 +14,7 @@ module.exports = (env) => {
         entry: path.resolve(__dirname, './src/index.tsx'),
         output: {
             path: path.resolve(__dirname, 'dist'),
+            publicPath: '/',
             filename: 'index_bundle.js'
         },
         resolve: {
@@ -22,6 +23,7 @@ module.exports = (env) => {
         },
         devServer: {
             contentBase: path.resolve(__dirname, 'public'),
+            historyApiFallback: true,
             port: 9000
         },
         module: {
