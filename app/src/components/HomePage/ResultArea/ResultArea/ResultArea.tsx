@@ -1,27 +1,34 @@
 import React, { FunctionComponent } from 'react';
-import { useSelector } from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import ResultActionBar from '../ResultActionBar/ResultActionBar';
 import Results from '../Results/Results';
-import NoFilmsFound from '../../NoFilmsFound/NoFilmsFound';
 import { FilmData } from '../../../filmData';
 import './ResultArea.scss';
-import { SortData } from '../../../../redux/data/dataSlice';
+import { SortData, resetErrorState } from '../../../../redux/data/dataSlice';
 import Loader from '../../../common/Loader/Loader';
+import {useHistory} from "react-router";
 
 interface ResultAreaProps {
     data: Array<FilmData> | undefined;
     sortData: SortData;
     filter: string;
-    handleMovieOpen: (data: FilmData) => void;
 }
 
 const ResultArea: FunctionComponent<ResultAreaProps> = ({
     data,
     sortData,
     filter,
-    handleMovieOpen,
 }): JSX.Element => {
+    const dispatch = useDispatch();
     const loading = useSelector((state) => state.data.loading);
+    const error = useSelector((state) => state.data.error);
+    let history = useHistory();
+
+    if (error) {
+        dispatch(resetErrorState());
+        history.push("/not_found");
+    }
+
     return (
         <div className="result-area wrapper">
             {loading ? (
@@ -35,14 +42,11 @@ const ResultArea: FunctionComponent<ResultAreaProps> = ({
                         </span>
                         <span className="found">movies found</span>
                     </div>
-                    {data && data.length ? (
-                        <Results
-                            handleMovieOpen={handleMovieOpen}
-                            filmsData={data}
-                        />
-                    ) : (
-                        <NoFilmsFound />
-                    )}
+
+                    {data && <Results
+                        filmsData={data}
+                    />}
+
                 </>
             )}
         </div>

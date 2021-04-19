@@ -11,7 +11,7 @@ const MovieCard: FunctionComponent<MovieCardProps> = ({ card }) => {
 
     const handleImageError = () => {
         if (imageRef && imageRef.current) {
-            imageRef.current.src = 'images/coming-soon.png';
+            imageRef.current.src = '/images/coming-soon.png';
         }
     };
 

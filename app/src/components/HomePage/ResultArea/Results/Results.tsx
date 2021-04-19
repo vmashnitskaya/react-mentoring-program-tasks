@@ -5,12 +5,10 @@ import './Results.scss';
 
 interface ResultsProps {
     filmsData: Array<FilmData>;
-    handleMovieOpen: (data: FilmData) => void;
 }
 
 const Results: FunctionComponent<ResultsProps> = ({
     filmsData,
-    handleMovieOpen,
 }) => {
     return (
         <div className="results">
@@ -18,7 +16,6 @@ const Results: FunctionComponent<ResultsProps> = ({
                 <FilmCard
                     key={film.id}
                     cardInfo={film}
-                    handleMovieOpen={handleMovieOpen}
                 />
             ))}
         </div>

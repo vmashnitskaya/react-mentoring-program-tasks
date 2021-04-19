@@ -2,7 +2,6 @@ import React, { FunctionComponent, useState, useRef, ChangeEvent } from 'react';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import {
-    resetCurrentFilmDisplayed,
     setSearchValue,
 } from '../../../../redux/data/dataSlice';
 import './Search.scss';
@@ -23,7 +22,6 @@ const Search: FunctionComponent = () => {
             }
         } else {
             dispatch(setSearchValue(search));
-            dispatch(resetCurrentFilmDisplayed());
         }
     };
 

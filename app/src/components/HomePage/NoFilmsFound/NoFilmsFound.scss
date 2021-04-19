@@ -2,6 +2,8 @@
 
 .no-films {
   display: flex;
+  flex-direction: column;
+  flex: auto;
   justify-content: center;
   align-items: center;
   background-color: $main-dark;
@@ -9,5 +11,13 @@
 
   h2 {
     color: $main-white
+  }
+
+  button {
+    border: 1px solid $main-pink;
+    background-color: transparent;
+    color: $main-pink;
+    padding: 10px 20px;
+    margin-top: 30px;
   }
 }

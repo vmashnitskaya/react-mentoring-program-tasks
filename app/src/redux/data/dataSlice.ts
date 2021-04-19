@@ -58,6 +58,11 @@ export const fetchSortedFilteredSearchedMovies = createAsyncThunk<
     url += 'limit=200';
 
     const response = await fetchMovies(encodeURI(url));
+
+    if(!response.data.length) {
+        throw new Error('No films');
+    }
+
     return response.data;
 });
 
@@ -103,6 +108,16 @@ export const addMovie = createAsyncThunk<void, FilmData, { state: any }>(
     }
 );
 
+export const fetchMovie = createAsyncThunk<FilmData, string, { state: any }>(
+    'data/fetchMovie',
+    async (id) => {
+        const url = `${URL}/${id}`;
+
+        const response = await fetchMovies(encodeURI(url));
+        return response;
+    }
+);
+
 export const dataSlice = createSlice({
     name: 'data',
     initialState: INITIAL_STATE,
@@ -128,8 +143,8 @@ export const dataSlice = createSlice({
         setCurrentFilmDisplayed: (state, action) => {
             state.currentFilmDisplayed = action.payload;
         },
-        resetCurrentFilmDisplayed: (state) => {
-            state.currentFilmDisplayed = undefined;
+        resetErrorState: (state) => {
+            state.error = undefined;
         },
     },
     extraReducers: (builder) => {
@@ -182,6 +197,17 @@ export const dataSlice = createSlice({
             state.loading = false;
             state.error = action.error.message;
         });
+        builder.addCase(fetchMovie.fulfilled, (state, action) => {
+            state.loading = false;
+            state.currentFilmDisplayed = action.payload;
+        });
+        builder.addCase(fetchMovie.pending, (state) => {
+            state.loading = true;
+        });
+        builder.addCase(fetchMovie.rejected, (state, action) => {
+            state.loading = false;
+            state.error = action.error.message;
+        });
     },
 });
 
@@ -193,7 +219,7 @@ export const {
     setSearchValue,
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
-    resetCurrentFilmDisplayed,
+    resetErrorState,
 } = dataSlice.actions;
 
 export default dataSlice.reducer;
