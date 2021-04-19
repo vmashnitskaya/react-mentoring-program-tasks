@@ -1,6 +1,6 @@
 import { FilmData } from '../../components/filmData';
 
-const fetchMovies = async (
+export const fetchMovies = async (
     url: string,
     method = 'GET',
     film?: Partial<FilmData>
@@ -24,5 +24,3 @@ const fetchMovies = async (
         throw new Error(e.message || 'Something went wrong.');
     }
 };
-
-export default fetchMovies;

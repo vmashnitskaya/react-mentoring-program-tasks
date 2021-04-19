@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders button snapshot 1`] = `
+<DocumentFragment>
+  <footer>
+    <a
+      class="logo"
+      href="/home"
+    >
+      <span
+        class="logo-netflix"
+      >
+        netflix
+      </span>
+      <span>
+        roulette
+      </span>
+    </a>
+  </footer>
+</DocumentFragment>
+`;

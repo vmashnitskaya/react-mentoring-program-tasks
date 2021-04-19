@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { FilmData } from '../../components/filmData';
-import fetchMovies from './movieHttp';
+import {fetchMovies} from './movieHttp';
 
 const URL = 'http://localhost:4000/movies';
 
@@ -20,13 +20,15 @@ interface DataSliceInterface {
     currentFilmDisplayed: FilmData | undefined;
 }
 
-const DEFAULT_SORT = {
+export const DEFAULT_SORT = {
     title: 'Release date',
     direction: 'asc',
     value: 'release_date',
 };
 
-const INITIAL_STATE: DataSliceInterface = {
+export const DEFAULT_FILTER_VALUE = 'All';
+
+export const INITIAL_STATE: DataSliceInterface = {
     loading: false,
     error: '',
     data: [],
@@ -132,7 +134,7 @@ export const dataSlice = createSlice({
             state.filterValue = action.payload;
         },
         setDefaultFilterValue: (state) => {
-            state.filterValue = 'All';
+            state.filterValue = DEFAULT_FILTER_VALUE;
         },
         setSearchValue: (state, action) => {
             state.searchValue = action.payload;
