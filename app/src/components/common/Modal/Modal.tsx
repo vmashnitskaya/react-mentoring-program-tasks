@@ -3,7 +3,12 @@ import ReactDOM from 'react-dom';
 import Button from '../Button/Button';
 import './Modal.scss';
 
-const modalRoot = document.getElementById('modal-root') as HTMLElement;
+export let modalRoot = document.getElementById('modal-root') as HTMLElement;
+if (!modalRoot) {
+    modalRoot = document.createElement('div');
+    modalRoot.setAttribute('id', 'modal-root');
+    document.body.appendChild(modalRoot);
+}
 
 interface ModalProps {
     headerText: string;
@@ -18,7 +23,7 @@ class Modal extends PureComponent<ModalProps, unknown> {
         return ReactDOM.createPortal(
             <div className="overlay-modal">
                 <div className="modal">
-                    <div className="close">
+                    <div className="close" data-testid={"close"}>
                         <Button
                             className="material-icons select-toggle"
                             onClick={handleModalClose}
@@ -27,7 +32,7 @@ class Modal extends PureComponent<ModalProps, unknown> {
                         />
                     </div>
 
-                    <div className="modal-header">{headerText}</div>
+                    <div className="modal-header" data-testid='modal-header'>{headerText}</div>
                     {children}
                 </div>
             </div>,

@@ -76,27 +76,21 @@ describe('test async actions', () =>{
     const mockedStore = mockStore(INITIAL_STATE);
 
     test('test fetchSortedFilteredSearchedMovies', async () => {
-
-        // @ts-ignore
-        movieHttp.fetchMovies.mockImplementation(() => Promise.resolve(fetchedData));
+        (movieHttp.fetchMovies as any).mockImplementation(() => Promise.resolve(fetchedData));
 
         const expectedActions = ["data/fetchCustomData/pending", 'data/fetchCustomData/fulfilled'];
 
-        // @ts-ignore
-        return mockedStore.dispatch(fetchSortedFilteredSearchedMovies({sortData: DEFAULT_SORT, filterValue: '', searchValue: ''})).then(() => {
+        return (mockedStore as any).dispatch(fetchSortedFilteredSearchedMovies({sortData: DEFAULT_SORT, filterValue: '', searchValue: ''})).then(() => {
             expect(mockedStore.getActions().map((el) =>  el.type)).toEqual(expectedActions);
         })
     });
 
     test('test updateMovie', async () => {
-
-        // @ts-ignore
-        movieHttp.fetchMovies.mockImplementationOnce(() => Promise.resolve());
+        (movieHttp.fetchMovies as any).mockImplementationOnce(() => Promise.resolve());
 
         const expectedActions = ["data/updateMovie/pending", "data/updateMovie/fulfilled"];
 
-        // @ts-ignore
-        return mockedStore.dispatch(updateMovie(fetchedData.data[0])).then(() => {
+        return (mockedStore as any).dispatch(updateMovie(fetchedData.data[0])).then(() => {
             const tested = mockedStore.getActions().map((el) =>  el.type);
             expect(tested).toContain(expectedActions[0]);
             expect(tested).toContain(expectedActions[1]);
@@ -104,14 +98,11 @@ describe('test async actions', () =>{
     });
 
     test('test deleteMovie reject', async () => {
-
-        // @ts-ignore
-        movieHttp.fetchMovies.mockImplementationOnce(() => Promise.reject());
+        (movieHttp.fetchMovies as any).mockImplementationOnce(() => Promise.reject());
 
         const expectedActions = ["data/deleteMovie/pending", "data/deleteMovie/rejected"];
 
-        // @ts-ignore
-        return mockedStore.dispatch(deleteMovie(fetchedData.data[0].id)).then(() => {
+        return (mockedStore as any).dispatch(deleteMovie(fetchedData.data[0].id)).then(() => {
             const tested = mockedStore.getActions().map((el) =>  el.type);
             expect(tested).toContain(expectedActions[0]);
             expect(tested).toContain(expectedActions[1]);
@@ -119,14 +110,11 @@ describe('test async actions', () =>{
     });
 
     test('test addMovie reject', async () => {
-
-        // @ts-ignore
-        movieHttp.fetchMovies.mockImplementationOnce(() => Promise.reject());
+        (movieHttp.fetchMovies as any).mockImplementationOnce(() => Promise.reject());
 
         const expectedActions = ["data/addMovie/pending", "data/addMovie/rejected"];
 
-        // @ts-ignore
-        return mockedStore.dispatch(addMovie(fetchedData.data[0])).then(() => {
+        return (mockedStore as any).dispatch(addMovie(fetchedData.data[0])).then(() => {
             const tested = mockedStore.getActions().map((el) =>  el.type);
             expect(tested).toContain(expectedActions[0]);
             expect(tested).toContain(expectedActions[1]);

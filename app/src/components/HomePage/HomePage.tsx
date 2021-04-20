@@ -15,8 +15,8 @@ import {
 import SearchArea from './SearchArea';
 import ResultArea from './ResultArea';
 import MovieDetails from './MovieDetails';
-import NoFilmsFound from "./NoFilmsFound/NoFilmsFound";
-import ErrorPage404 from "./ErrorPage404/ErrorPage404";
+import NoFilmsFound from "../common/NoFilmsFound/NoFilmsFound";
+import ErrorPage404 from "../common/ErrorPage404/ErrorPage404";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();

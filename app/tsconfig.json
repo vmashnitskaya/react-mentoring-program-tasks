@@ -16,7 +16,7 @@
     "noUnusedParameters": true,
     "sourceMap": true,
     "baseUrl": "./src",
-    "types": ["jest"],
+    "types": ["node", "jest"],
     "lib": ["ES2015", "dom"]
   },
   "include": [

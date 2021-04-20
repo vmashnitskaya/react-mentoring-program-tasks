@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Button renders button snapshot 1`] = `
+exports[`Footer renders footer snapshot 1`] = `
 <DocumentFragment>
   <footer>
     <a
