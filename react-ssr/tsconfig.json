@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "noImplicitAny": false,
+      "module": "es6",
+      "target": "es5",
+      "jsx": "react",
+      "lib": ["es2018", "dom"],
+      "types": ["node", "jest"],
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "removeComments": true
+    },
+    "exclude": ["node_modules"]
+  }
