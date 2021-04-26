@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, {FunctionComponent, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { addMovie } from '../../../../redux/data/dataSlice';
 import './SearchArea.scss';
@@ -23,7 +23,7 @@ const DEFAULT_VALUE: FilmData = {
     runtime: 0,
 };
 
-const SearchArea: FunctionComponent = (): JSX.Element => {
+const SearchArea: FunctionComponent<any> = (): JSX.Element => {
     const dispatch = useDispatch();
     const [newMovie, setNewMovie] = useState<FilmData>(DEFAULT_VALUE);
     const [isAddModalOpened, setIsAddModalOpened] = useState<boolean>(false);

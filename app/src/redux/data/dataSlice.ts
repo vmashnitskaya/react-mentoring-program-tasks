@@ -148,6 +148,11 @@ export const dataSlice = createSlice({
         resetErrorState: (state) => {
             state.error = undefined;
         },
+        setQueryData: (state, action) => {
+            state.sortData = action.payload.sortData;
+            state.filterValue = action.payload.filterValue;
+            state.searchValue = action.payload.searchValue;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(
@@ -222,6 +227,7 @@ export const {
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
     resetErrorState,
+    setQueryData
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

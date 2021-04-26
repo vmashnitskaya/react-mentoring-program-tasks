@@ -7,7 +7,6 @@ import MovieCard from '../MovieCard/MovieCard';
 import './MovieDetails.scss';
 import Button from '../../../common/Button/Button';
 
-
 interface UseParamsProps {
     id: string
 }

@@ -7,9 +7,6 @@ import {
 } from "react-router-dom";
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    setDefaultSortData,
-    setDefaultFilterValue,
-    setDefaultSearchValue,
     fetchSortedFilteredSearchedMovies
 } from '../../redux/data/dataSlice';
 import SearchArea from './SearchArea';
@@ -17,6 +14,7 @@ import ResultArea from './ResultArea';
 import MovieDetails from './MovieDetails';
 import NoFilmsFound from "../common/NoFilmsFound/NoFilmsFound";
 import ErrorPage404 from "../common/ErrorPage404/ErrorPage404";
+import MainPage from "./MainPage";
 
 const HomePage: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();
@@ -26,12 +24,6 @@ const HomePage: FunctionComponent = (): JSX.Element => {
     const searchValue = useSelector((state) => state.data.searchValue);
 
     useEffect(() => {
-        dispatch(setDefaultSearchValue());
-        dispatch(setDefaultFilterValue());
-        dispatch(setDefaultSortData());
-    }, [dispatch]);
-
-    useEffect(() => {
         dispatch(
             fetchSortedFilteredSearchedMovies({
                 searchValue,
@@ -39,21 +31,14 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                 sortData,
             })
         );
-    }, [sortData, filterValue, searchValue, dispatch]);
+    }, [dispatch, searchValue, filterValue, sortData]);
 
     return (
             <Router basename="/">
                     <Switch>
-                        <Route path="/home" render={() =>
-                            <>
-                                <SearchArea />
-                                <ResultArea
-                                    data={data}
-                                    sortData={sortData}
-                                    filter={filterValue}
-                                />
-                            </>
-                        } />
+                        <Route path="/home">
+                            <MainPage data={data} sort={sortData} filter={filterValue} />
+                        </Route>
                         <Route path="/film/:id" render={(props) =>
                             <>
                                 <MovieDetails {...props}/>
@@ -63,7 +48,8 @@ const HomePage: FunctionComponent = (): JSX.Element => {
                                     filter={filterValue}
                                 />
                             </>
-                        } />
+                        } >
+                        </Route>
                         <Route path="/not_found" render={() =>
                             <>
                                 <SearchArea />
