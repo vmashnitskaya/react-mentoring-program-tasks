@@ -34,10 +34,18 @@ app.use(Express.static(__dirname + '/public'));
 app.get('*', (req: Express.Request, res: Express.Response) => {
     const store = configureStore(INITIAL_STATE);
 
-    const promises = [Promise.resolve(store.dispatch(fetchSortedFilteredSearchedMovies({filterValue: undefined, searchValue: undefined, sortData: undefined})))];
+    const queryParams = req.query;
+
+    const promises = [Promise.resolve(store.dispatch(fetchSortedFilteredSearchedMovies(
+        {filterValue: (queryParams.filter as string) || undefined,
+            searchValue: (queryParams.search as string) || undefined,
+            sortData: queryParams.sort && queryParams.sortDirection ?{
+                title: (queryParams.sort as string).split('_').join(' '),
+                direction: (queryParams.sortDirection as string),
+                value: (queryParams.sort as string)
+            } : undefined})))];
 
     Promise.all(promises).then(() => {
-        //const params = qs.parse((req as any).query);
         const location = req.url;
         const context: StaticRouterContext = {};
 
