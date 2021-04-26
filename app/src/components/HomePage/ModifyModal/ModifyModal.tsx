@@ -61,19 +61,19 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
                             <Form>
                                 <label>
                                     Title
-                                    <Field name="title" id="title"/>
+                                    <Field name="title" id="title" data-testid='title'/>
                                 </label>
                                 <ErrorMessage name="title"  component="div" className="error"/>
 
                                 <label>
                                     Tagline
-                                    <Field name="tagline" id="tagline" />
+                                    <Field name="tagline" id="tagline" data-testid='tagline'/>
                                 </label>
                                 <ErrorMessage name="tagline"  component="div" className="error"/>
 
                                 <label>
                                     Vote average
-                                    <Field name="vote_average" id="vote_average" />
+                                    <Field name="vote_average" id="vote_average" data-testid='vote_average'/>
                                 </label>
                                 {errors.vote_average && touched.vote_average ? (
                                     <div className="error">Value should be a positive number less or equal to 100</div>
@@ -81,7 +81,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Vote count
-                                    <Field name="vote_count" id="vote_count"/>
+                                    <Field name="vote_count" id="vote_count" data-testid='vote_count'/>
                                 </label>
                                 {errors.vote_count && touched.vote_count ? (
                                     <div className="error">Value should be positive a number</div>
@@ -89,13 +89,13 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Release date
-                                    <Field name="release_date" id="release_date" type="date"/>
+                                    <Field name="release_date" id="release_date" type="date" data-testid='release_date'/>
                                 </label>
                                 <ErrorMessage name="release_date"  component="div" className="error"/>
 
                                 <label>
                                     Poster URL
-                                    <Field name="poster_path" id="poster_path" />
+                                    <Field name="poster_path" id="poster_path" data-testid='poster_path' />
                                 </label>
                                 {errors.poster_path && touched.poster_path ? (
                                     <div className="error">Poster path should be a valid URl</div>
@@ -103,7 +103,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Genre
-                                    <Field value={values.genres.join(', ')} disabled/>
+                                    <Field  value={values.genres.join(', ')} disabled  data-testid='genres'/>
                                     <Select dropdownToggleMaterialIconTextClass="keyboard_arrow_down">
                                         <ul className="select-body">
                                             {selectCategory.map((el) => (
@@ -123,13 +123,13 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Overview
-                                    <Field name="overview" id="overview" />
+                                    <Field name="overview" id="overview" data-testid='overview'/>
                                 </label>
                                 <ErrorMessage name="overview"  component="div" className="error"/>
 
                                 <label>
                                     Budget
-                                    <Field name="budget" id="budget" />
+                                    <Field name="budget" id="budget" data-testid='budget'/>
                                 </label>
                                 {errors.budget && touched.budget ? (
                                     <div className="error">Value should be a positive number</div>
@@ -137,7 +137,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Revenue
-                                    <Field name="revenue" id="revenue" />
+                                    <Field name="revenue" id="revenue" data-testid='revenue' />
                                 </label>
                                 {errors.revenue && touched.revenue ? (
                                     <div className="error">Value should be a positive number</div>
@@ -145,7 +145,7 @@ const ModifyModal: FunctionComponent<EditModalProps> = ({
 
                                 <label>
                                     Runtime
-                                    <Field name="runtime" id="runtime" />
+                                    <Field name="runtime" id="runtime" data-testid='runtime' />
                                 </label>
                                 {errors.runtime && touched.runtime ? (
                                     <div className="error">Value should be a positive number</div>

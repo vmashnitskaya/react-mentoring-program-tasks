@@ -36,6 +36,7 @@ class Select extends PureComponent<SelectProps, SelectState> {
                 <Button
                     text={dropdownToggleMaterialIconTextClass}
                     className="material-icons select-toggle"
+                    data-testid="select-toggle"
                     onClick={this.toggleDropdown}
                     isLowerCase
                 />

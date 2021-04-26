@@ -15,7 +15,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "sourceMap": true,
-    "baseUrl": "./src"
+    "baseUrl": "./src",
+    "types": ["node", "jest"],
+    "lib": ["ES2015", "dom"]
   },
   "include": [
     "src"
