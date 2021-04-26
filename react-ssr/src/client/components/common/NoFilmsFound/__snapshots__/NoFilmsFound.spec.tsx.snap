@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`No films found renders no films found snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="no-films"
+  >
+    <h2>
+      No films found
+    </h2>
+    <button
+      class="uppercase"
+      type="button"
+    >
+      Go back home
+    </button>
+  </div>
+</DocumentFragment>
+`;

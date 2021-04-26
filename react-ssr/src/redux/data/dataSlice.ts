@@ -18,6 +18,7 @@ interface DataSliceInterface {
     filterValue: string;
     searchValue: string;
     currentFilmDisplayed: FilmData | undefined;
+    isFirstRender: boolean;
 }
 
 export const DEFAULT_SORT = {
@@ -36,6 +37,7 @@ export const INITIAL_STATE: DataSliceInterface = {
     filterValue: 'All',
     searchValue: '',
     currentFilmDisplayed: undefined,
+    isFirstRender: true
 };
 
 export const fetchSortedFilteredSearchedMovies = createAsyncThunk<
@@ -148,6 +150,9 @@ export const dataSlice = createSlice({
         resetErrorState: (state) => {
             state.error = undefined;
         },
+        resetFirstRenderFlag: (state) => {
+            state.isFirstRender = false;
+        },
     },
     extraReducers: (builder) => {
         builder.addCase(
@@ -222,6 +227,7 @@ export const {
     setDefaultSearchValue,
     setCurrentFilmDisplayed,
     resetErrorState,
+    resetFirstRenderFlag
 } = dataSlice.actions;
 
 export default dataSlice.reducer;

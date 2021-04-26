@@ -1,0 +1,153 @@
+@import "src/client/components/constants";
+
+body.is-overflow-hidden {
+  overflow: hidden;
+  margin-right: 17px;
+}
+
+.overlay-modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.7);
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.modal {
+  min-height: 200px;
+  max-height: 600px;
+  min-width: 500px;
+  padding: 20px;
+  position: relative;
+  background-color: $main-dark;
+  color: $main-white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  overflow-y: auto;
+
+  .close {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    button.material-icons {
+      outline: none;
+      border: 0;
+      background: transparent;
+      color: $main-white;
+      font-size: 40px;
+      line-height: 1;
+      padding: 12px;
+    }
+  }
+
+  .modal-header {
+    text-transform: uppercase;
+    font-size: 30px;
+    line-height: 1;
+    margin-top: 20px;
+  }
+
+  .modal-body {
+    padding-top: 40px;
+    font-size: 20px;
+
+    label,
+    input {
+      display: block;
+    }
+
+
+      label {
+        color: $main-pink;
+        text-transform: uppercase;
+        font-size: 16px;
+        margin-bottom: 10px;
+        position: relative;
+
+        input {
+          width: 100%;
+          padding: 16px 35px 16px 8px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          color: $main-white;
+          outline: none;
+          border: 0;
+          background-color: rgba(66, 66, 66, 0.4);
+          font-size: 18px;
+          border-radius: $main-border-radius;
+          margin-top: 10px;
+
+          &#id {
+            background-color: transparent;
+            padding-left: 0;
+          }
+
+          &[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(49%) sepia(21%) saturate(1691%) hue-rotate(306deg) brightness(92%) contrast(110%);
+            cursor: pointer;
+            margin-right: -25px;
+          }
+        }
+
+        .select-wrapper {
+          width: 100%;
+          position: absolute;
+          top: 40px;
+          right: 8px;
+        }
+
+        .select-toggle {
+          background-color: transparent;
+          color: $main-pink;
+          font-size: 30px;
+          padding: 0;
+        }
+      }
+
+      .error {
+        font-size: 14px;
+        color: $main-white;
+        padding: 8px 0;
+        text-decoration: underline;
+      }
+    }
+
+  .modal-actions {
+    padding-top: 30px;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      background-color: $main-pink;
+      color: $main-white;
+      font-size: 16px;
+      padding: 8px 12px;
+      margin-left: 20px;
+
+      &:hover {
+        background-color: darken($main-pink, 1);
+      }
+
+      &:active {
+        transform: scale(0.98);
+        background-color: darken($main-pink, 1);
+      }
+
+      &.confirm-reset {
+        background-color: transparent;
+        border: 1px solid $main-pink;
+        color: $main-pink;
+
+        &:active,
+        &:hover {
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

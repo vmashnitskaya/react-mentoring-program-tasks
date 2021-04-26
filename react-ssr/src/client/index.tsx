@@ -6,6 +6,7 @@ import {
 } from "react-router-dom";
 import configureStore from '../redux/store';
 import {DefaultRootState} from "react-redux";
+import 'material-icons/iconfont/material-icons.scss';
 import App from '../shared/index';
 
 declare global {

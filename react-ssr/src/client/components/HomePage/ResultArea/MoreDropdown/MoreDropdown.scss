@@ -1,0 +1,67 @@
+@import "src/client/components/constants";
+@import "src/client/components/mixins";
+
+.more {
+  .more-button {
+    position: absolute;
+    color: $main-white;
+    background-color: rgba(66, 66, 66, 0.7);
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    right: 15px;
+    top: 15px;
+
+    span {
+      vertical-align: middle;
+    }
+
+    &:hover,
+    &:active {
+      background-color: rgba(66, 66, 66, 0.9);
+    }
+  }
+
+  .dropdown-list {
+    @include reset-style-list;
+    display: block;
+    background-color: rgba(66, 66, 66, 0.7);
+    border-radius: $main-border-radius;
+    position: absolute;
+    top: 55px;
+    right: 15px;
+    width: 150px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  .close-area {
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      background-color: transparent;
+      color: $main-white;
+      font-size: 16px;
+      padding: 5px;
+    }
+  }
+
+  .dropdown-list-item {
+    background-color: transparent;
+    color: $main-white;
+    font-size: $main-font-size;
+    padding: 5px 10px;
+    width: 100%;
+    border-radius: 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    text-align: left;
+
+    &:hover {
+      background-color: $main-pink;
+    }
+  }
+}

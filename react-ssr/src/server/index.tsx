@@ -13,7 +13,7 @@ import { INITIAL_STATE } from '../redux/data/dataSlice';
 import App from '../shared/index'
 const app = Express();
 
-const html = ({ body, reduxState }: { body: string, reduxState: DefaultRootState }) => `
+const html = ({ body, reduxState }: { body: string, reduxState: any }) => `
   <!DOCTYPE html>
   <html>
     <head>
@@ -21,6 +21,7 @@ const html = ({ body, reduxState }: { body: string, reduxState: DefaultRootState
     </head>
     <body>
       <div id="root">${body}</div>
+       <div id="root-modal"></div>
     </body>
     <script>
       window.PRELOADED_STATE = ${JSON.stringify(reduxState)}
@@ -53,7 +54,7 @@ app.get('*', (req: Express.Request, res: Express.Response) => {
             return;
         }
 
-        const reduxState = store.getState();
+        const reduxState = store.getState().data;
 
         res
             .status(context.statusCode || 200)
