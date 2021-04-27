@@ -46,7 +46,7 @@ const SearchArea: FunctionComponent = (): JSX.Element => {
 
     return (
         <>
-            <div className="search-area wrapper">
+            <div className="search-area wrapper" style={{"backgroundImage": "url('/images/bg.jpg')"}}>
                 <div className="search-area-add">
                     <Button text="+ ADD MOVIE" onClick={toggleModal} />
                 </div>

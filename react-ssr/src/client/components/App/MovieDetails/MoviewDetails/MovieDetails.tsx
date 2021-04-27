@@ -13,10 +13,10 @@ const MovieDetails: FunctionComponent<any> = () => {
     );
 
     const handleBackHomeClick = () => {
-        history.push("/home");
+        history.push("/");
     };
 
-    return (<div className="movie-details wrapper">
+    return (<div className="movie-details wrapper" style={{"backgroundImage": "url('/images/bg.jpg')"}}>
                 <div className="actions">
                     <Search />
                     <Button

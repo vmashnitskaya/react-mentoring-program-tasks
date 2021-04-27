@@ -47,8 +47,13 @@ export const fetchSortedFilteredSearchedMovies = createAsyncThunk<
         filterValue: string;
         sortData: SortData;
     }
->('data/fetchCustomData', async (args) => {
+>('data/fetchCustomData', async (args, {getState, dispatch}) => {
     const { searchValue, filterValue, sortData } = args;
+
+    dispatch(setSortData(sortData || DEFAULT_SORT));
+    dispatch(setFilterValue(filterValue || 'All'));
+    dispatch(setSearchValue(searchValue || ''));
+
     let url = `${URL}?`;
 
     url += searchValue ? `search=${searchValue}&searchBy=title&` : '';
@@ -207,6 +212,7 @@ export const dataSlice = createSlice({
         builder.addCase(fetchMovie.fulfilled, (state, action) => {
             state.loading = false;
             state.currentFilmDisplayed = action.payload;
+            state.searchValue = ''
         });
         builder.addCase(fetchMovie.pending, (state) => {
             state.loading = true;

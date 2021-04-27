@@ -53,7 +53,7 @@ module.exports = {
   },
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
-    new CopyWebpackPlugin({patterns: [{from: 'static/images', to: 'images'}]}),
+    new CopyWebpackPlugin({patterns: [{from: 'src/static/images', to: 'images'}]}),
   ],
   output: {
     filename: '[name].bundle.js',

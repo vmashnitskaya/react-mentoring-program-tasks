@@ -1,23 +1,25 @@
-import qs from 'qs';
 import * as Express from 'express';
 import * as React from 'react';
-import { StaticRouter } from 'react-router-dom';
+import { StaticRouter, matchPath  } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import { renderToString  } from 'react-dom/server';
-import { DefaultRootState } from "react-redux";
 import configureStore from '../redux/store';
-import {fetchSortedFilteredSearchedMovies} from '../redux/data/dataSlice';
+import Routes from './routes';
+import {fetchMovie, fetchSortedFilteredSearchedMovies} from '../redux/data/dataSlice';
 import { INITIAL_STATE } from '../redux/data/dataSlice';
 
-import App from '../shared/index'
+import App from '../shared/index';
+import {getQueryParams} from "./utils";
+
 const app = Express();
 
 const html = ({ body, reduxState }: { body: string, reduxState: any }) => `
   <!DOCTYPE html>
   <html>
     <head>
-        <link rel="stylesheet" href="main.css">
+        <link rel="fav icon" href="/images/favicon.ico" type="image/x-icon">
+        <link rel="stylesheet" href="/main.css">
     </head>
     <body>
       <div id="root">${body}</div>
@@ -26,24 +28,29 @@ const html = ({ body, reduxState }: { body: string, reduxState: any }) => `
     <script>
       window.PRELOADED_STATE = ${JSON.stringify(reduxState)}
     </script>
-    <script src="main.bundle.js" defer></script>
+    <script src="/main.bundle.js" defer></script>
   </html>
 `;
 
 app.use(Express.static(__dirname + '/public'));
 app.get('*', (req: Express.Request, res: Express.Response) => {
     const store = configureStore(INITIAL_STATE);
-
+    const promises = [];
     const queryParams = req.query;
 
-    const promises = [Promise.resolve(store.dispatch(fetchSortedFilteredSearchedMovies(
-        {filterValue: (queryParams.filter as string) || undefined,
-            searchValue: (queryParams.search as string) || undefined,
-            sortData: queryParams.sort && queryParams.sortDirection ?{
-                title: (queryParams.sort as string).split('_').join(' '),
-                direction: (queryParams.sortDirection as string),
-                value: (queryParams.sort as string)
-            } : undefined})))];
+    const currentRoute =
+        Routes.find(route => matchPath(req.path, route));
+
+    if(currentRoute) {
+        if(currentRoute.isMovieLoaded) {
+            promises.push(Promise.resolve(store.dispatch(fetchMovie((matchPath(req.path, currentRoute) as any).params.id))));
+        }
+
+        if(currentRoute.isDataLoaded) {
+            const query = getQueryParams(queryParams);
+            promises.push(Promise.resolve(store.dispatch(fetchSortedFilteredSearchedMovies(query))));
+        }
+    }
 
     Promise.all(promises).then(() => {
         const location = req.url;
@@ -56,11 +63,6 @@ app.get('*', (req: Express.Request, res: Express.Response) => {
                 </StaticRouter>
             </Provider>
         );
-
-        if (context.url) {
-            res.redirect(context.url);
-            return;
-        }
 
         const reduxState = store.getState().data;
 

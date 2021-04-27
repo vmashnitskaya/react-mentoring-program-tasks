@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, {FunctionComponent, PureComponent} from 'react';
 import SearchArea from "../components/App/SearchArea";
 import ResultArea from "../components/App/ResultArea";
 import {FilmData} from "../components/filmData";
@@ -10,21 +10,13 @@ interface HomePageProps {
     filter: string
 }
 
-class HomePage extends PureComponent<HomePageProps> {
-    constructor(props) {
-        super(props);
-    }
-
-  render() {
-        const {data, sortData, filter} = this.props;
+const HomePage: FunctionComponent<HomePageProps> = ({data, sortData, filter}) => {
     return (
         <>
-          <SearchArea/>
-          <ResultArea data={data} sortData={sortData} filter={filter} />
+            <SearchArea/>
+            <ResultArea data={data} sortData={sortData} filter={filter} />
         </>
-    );
-  }
+    )
 }
-
 
 export default HomePage;

@@ -3,7 +3,7 @@ import './Logo.scss';
 
 const Logo: FunctionComponent = () => {
     return (
-        <a href="/home" className="logo">
+        <a href="/" className="logo">
             <span className="logo-netflix">netflix</span>
             <span>roulette</span>
         </a>

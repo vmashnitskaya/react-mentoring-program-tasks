@@ -7,7 +7,7 @@ const NoFilmsFound: FunctionComponent = () => {
     const history = useHistory();
 
     const handleBackHome = () => {
-        history.push("/home");
+        history.push("/");
     }
 
     return (
