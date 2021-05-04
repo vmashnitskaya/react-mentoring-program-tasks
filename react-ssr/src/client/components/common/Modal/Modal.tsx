@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
+import loadable from '@loadable/component';
 import ReactDOM from 'react-dom';
-import Button from '../Button/Button';
 import './Modal.scss';
+
+const Button = loadable(() => import('../Button/Button'));
 
 const isClient = typeof window !== 'undefined' && window.document && window.document.createElement;
 

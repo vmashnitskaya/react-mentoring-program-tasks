@@ -1,5 +1,6 @@
 import React, { FunctionComponent } from 'react';
-import ErrorPage404 from "../components/common/ErrorPage404/ErrorPage404";
+import loadable from '@loadable/component';
+const ErrorPage404 = loadable(() => import('../components/common/ErrorPage404/ErrorPage404'));
 
 const ErrorPage: FunctionComponent = () => {
   return <ErrorPage404 />;

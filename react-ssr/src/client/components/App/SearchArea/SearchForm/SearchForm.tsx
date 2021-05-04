@@ -4,9 +4,11 @@ import React, {
     useState,
     MouseEvent, useEffect,
 } from 'react';
+import loadable from '@loadable/component';
 import {useDispatch, useSelector} from 'react-redux';
 import { setSearchValue } from '../../../../../redux/data/dataSlice';
-import Button from '../../../common/Button/Button';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
 
 const SearchForm: FunctionComponent = () => {
     const dispatch = useDispatch();

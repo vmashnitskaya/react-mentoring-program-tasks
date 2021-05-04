@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
-import FilmCard from '../FilmCard/FilmCard';
+import loadable from '@loadable/component';
 import { FilmData } from '../../../filmData';
 import './Results.scss';
+
+const FilmCard = loadable(() => import('../FilmCard/FilmCard'));
 
 interface ResultsProps {
     filmsData: Array<FilmData>;

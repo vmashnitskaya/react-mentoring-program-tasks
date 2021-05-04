@@ -1,12 +1,14 @@
 import React, { FunctionComponent } from 'react';
+import loadable from '@loadable/component';
 import {useDispatch, useSelector} from 'react-redux';
-import ResultActionBar from '../ResultActionBar/ResultActionBar';
-import Results from '../Results/Results';
 import { FilmData } from '../../../filmData';
 import './ResultArea.scss';
 import { SortData, resetErrorState } from '../../../../../redux/data/dataSlice';
-import Loader from '../../../common/Loader/Loader';
 import {useHistory} from "react-router";
+
+const Results = loadable(() => import('../Results/Results'));
+const ResultActionBar = loadable(() => import('../ResultActionBar/ResultActionBar'));
+const Loader = loadable(() => import('../../../common/Loader/Loader'));
 
 interface ResultAreaProps {
     data: Array<FilmData> | undefined;

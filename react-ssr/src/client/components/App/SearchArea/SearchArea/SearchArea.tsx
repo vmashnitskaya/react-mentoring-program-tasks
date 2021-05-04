@@ -1,12 +1,14 @@
 import React, { FunctionComponent, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import loadable from '@loadable/component';
 import { addMovie } from '../../../../../redux/data/dataSlice';
 import './SearchArea.scss';
-import SearchForm from '../SearchForm/SearchForm';
-import Button from '../../../common/Button/Button';
 import { FilmData } from '../../../filmData';
-import ModifyModal from '../../ModifyModal/ModifyModal';
 import { toggleOverflowHidden } from '../../../utils/toggleOverflowHidden';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
+const SearchForm = loadable(() => import('../SearchForm/SearchForm'));
+const ModifyModal = loadable(() => import('../../ModifyModal/ModifyModal'));
 
 const DEFAULT_VALUE: FilmData = {
     id: 0,

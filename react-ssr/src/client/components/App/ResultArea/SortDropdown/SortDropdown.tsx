@@ -5,12 +5,14 @@ import React, {
     useRef,
     useCallback,
 } from 'react';
+import loadable from '@loadable/component';
 import { useDispatch, useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { setSortData, SortData } from '../../../../../redux/data/dataSlice';
-import Button from '../../../common/Button/Button';
 import './SortDropdown.scss';
 import sortDataStatic from '../../../../staticData/sortData';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
 
 export const DROPDOWN_CONTAINER_CLASS = 'dropdown-container';
 

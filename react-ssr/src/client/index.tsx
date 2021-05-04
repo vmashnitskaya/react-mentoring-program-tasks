@@ -8,6 +8,7 @@ import configureStore from '../redux/store';
 import {DefaultRootState} from "react-redux";
 import 'material-icons/iconfont/material-icons.scss';
 import App from '../shared/index';
+import { loadableReady } from '@loadable/component';
 
 declare global {
     interface Window {
@@ -17,9 +18,11 @@ declare global {
 
 const store = configureStore(window.PRELOADED_STATE);
 
-hydrate(
-    <Provider store={store}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </Provider>, document.getElementById('root'));
+loadableReady(() => {
+    hydrate(
+        <Provider store={store}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </Provider>, document.getElementById('root'));
+});

@@ -1,5 +1,6 @@
 import * as Express from 'express';
 import * as React from 'react';
+import path from "path";
 import { StaticRouter, matchPath  } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import { Provider } from 'react-redux';
@@ -8,6 +9,7 @@ import configureStore from '../redux/store';
 import Routes from './routes';
 import {fetchMovie, fetchSortedFilteredSearchedMovies} from '../redux/data/dataSlice';
 import { INITIAL_STATE } from '../redux/data/dataSlice';
+import { ChunkExtractor } from '@loadable/server';
 
 import App from '../shared/index';
 import {getQueryParams} from "./utils";
@@ -55,13 +57,15 @@ app.get('*', (req: Express.Request, res: Express.Response) => {
     Promise.all(promises).then(() => {
         const location = req.url;
         const context: StaticRouterContext = {};
+        const statsFile = path.resolve('dist/loadable-stats.json');
+        const extractor = new ChunkExtractor({ statsFile });
 
-        const body = renderToString(
+        const body = renderToString(extractor.collectChunks(
             <Provider store={store}>
                 <StaticRouter context={context} location={location}>
                     <App/>
                 </StaticRouter>
-            </Provider>
+            </Provider>)
         );
 
         const reduxState = store.getState().data;

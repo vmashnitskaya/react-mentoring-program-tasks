@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import Logo from '../Logo/Logo';
+import loadable from '@loadable/component';
 import './Footer.scss';
+
+const Logo = loadable(() => import('../Logo/Logo'));
 
 const Footer: FunctionComponent = () => {
     return (

@@ -5,15 +5,17 @@ import React, {
     useRef,
     useState,
 } from 'react';
+import loadable from '@loadable/component';
 import clsx from 'clsx';
 import { useDispatch } from 'react-redux';
 import { deleteMovie, updateMovie } from '../../../../../redux/data/dataSlice';
 import Button from '../../../common/Button/Button';
 import { FilmData } from '../../../filmData';
-import DeleteModal from '../DeleteModal/DeleteModal';
 import './MoreDropdown.scss';
-import ModifyModal from '../../ModifyModal/ModifyModal';
 import { toggleOverflowHidden } from '../../../utils/toggleOverflowHidden';
+
+const DeleteModal = loadable(() => import('../DeleteModal/DeleteModal'));
+const ModifyModal = loadable(() => import('../../ModifyModal/ModifyModal'));
 
 const MORE_DROPDOWN_CONTAINER_CLASS = 'more-dropdown-container-class';
 

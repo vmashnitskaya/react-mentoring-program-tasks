@@ -1,6 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -10,7 +11,7 @@ module.exports = {
   module: {
     rules: [
       {
-        loader: 'ts-loader',
+        use: ['babel-loader', 'ts-loader'],
         test: /\.tsx?$/,
         exclude: [/node_modules/],
       },
@@ -54,6 +55,7 @@ module.exports = {
   plugins: [
     new MiniCssExtractPlugin({ filename: '[name].css' }),
     new CopyWebpackPlugin({patterns: [{from: 'src/static/images', to: 'images'}]}),
+    new LoadablePlugin()
   ],
   output: {
     filename: '[name].bundle.js',

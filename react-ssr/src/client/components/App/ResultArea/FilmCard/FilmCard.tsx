@@ -1,9 +1,10 @@
-import React, { FunctionComponent, KeyboardEvent, useRef } from 'react';
+import React, { FunctionComponent, useRef } from 'react';
 import { FilmData } from '../../../filmData';
-import MoreDropdown from '../MoreDropdown/MoreDropdown';
 import './FilmCard.scss';
-import {useHistory} from "react-router";
 import {Link} from "react-router-dom";
+import loadable from '@loadable/component';
+
+const MoreDropdown = loadable(() => import('../MoreDropdown/MoreDropdown'));
 
 interface FilmCardProps {
     cardInfo: FilmData;

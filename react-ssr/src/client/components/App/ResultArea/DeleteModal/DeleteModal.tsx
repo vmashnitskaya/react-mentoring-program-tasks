@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import Button from '../../../common/Button/Button';
-import Modal from '../../../common/Modal/Modal';
+import loadable from '@loadable/component';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
+const Modal = loadable(() => import('../../../common/Modal/Modal'));
 
 interface DeleteModalProps {
     toggleDeleteModalClose: () => void;

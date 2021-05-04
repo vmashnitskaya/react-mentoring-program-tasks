@@ -1,12 +1,14 @@
 import React, { FunctionComponent, useState, useRef, ChangeEvent } from 'react';
+import loadable from '@loadable/component';
 import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 import {
     setSearchValue,
 } from '../../../../../redux/data/dataSlice';
 import './Search.scss';
-import Button from '../../../common/Button/Button';
 import useSearchState from '../../../../hooks/useSearchState';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
 
 const Search: FunctionComponent = () => {
     const dispatch = useDispatch();

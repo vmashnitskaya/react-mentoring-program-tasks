@@ -1,6 +1,8 @@
 import React, { FunctionComponent } from 'react';
-import SearchArea from "../components/App/SearchArea";
-import NoFilmsFound from "../components/common/NoFilmsFound/NoFilmsFound";
+import loadable from '@loadable/component';
+
+const SearchArea = loadable(() => import('../components/App/SearchArea'));
+const NoFilmsFound = loadable(() => import('../components/common/NoFilmsFound/NoFilmsFound'));
 
 const MovieNotFound: FunctionComponent = () => {
 

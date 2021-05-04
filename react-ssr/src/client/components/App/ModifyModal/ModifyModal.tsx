@@ -1,11 +1,13 @@
 import React, { FunctionComponent } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import Select from '../../common/Select/Select';
-import Button from '../../common/Button/Button';
+import loadable from '@loadable/component';
 import { FilmData } from '../../filmData';
 import selectCategory from '../../../staticData/select';
 import Modal from '../../common/Modal/Modal';
+
+const Select = loadable(() => import('../../common/Select/Select'));
+const Button = loadable(() => import('../../common/Button/Button'));
 
 interface EditModalProps {
     toggleModalClose: () => void;

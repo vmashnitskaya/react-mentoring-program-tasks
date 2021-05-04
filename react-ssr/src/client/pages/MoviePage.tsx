@@ -1,10 +1,12 @@
 import React, {FunctionComponent, useEffect} from 'react';
+import loadable from '@loadable/component';
 import {FilmData} from "../components/filmData";
 import {fetchMovie, resetErrorState, SortData} from "../../redux/data/dataSlice";
-import MovieDetails from "../components/App/MovieDetails";
-import ResultArea from "../components/App/ResultArea";
 import {useHistory, useLocation, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
+
+const MovieDetails = loadable(() => import('../components/App/MovieDetails'));
+const ResultArea = loadable(() => import('../components/App/ResultArea'));
 
 interface MoviePageProps {
     data: Array<FilmData>;

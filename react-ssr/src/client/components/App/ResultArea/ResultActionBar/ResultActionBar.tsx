@@ -1,8 +1,10 @@
 import React, { FunctionComponent } from 'react';
-import Tabs from '../Tabs/Tabs';
+import loadable from '@loadable/component';
 import './ResultActionBar.scss';
-import SortDropdown from '../SortDropdown/SortDropdown';
 import { SortData } from '../../../../../redux/data/dataSlice';
+
+const SortDropdown = loadable(() => import('../SortDropdown/SortDropdown'));
+const Tabs = loadable(() => import('../Tabs/Tabs'));
 
 interface ResultActionBarProps {
     sortData: SortData;

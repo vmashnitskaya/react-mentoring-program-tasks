@@ -1,7 +1,9 @@
 import React, { FunctionComponent } from 'react';
+import loadable from '@loadable/component';
 import {useHistory} from "react-router-dom";
 import './NoFilmsFound.scss';
-import Button from "../Button/Button";
+
+const Button = loadable(() => import('../Button/Button'));
 
 const NoFilmsFound: FunctionComponent = () => {
     const history = useHistory();

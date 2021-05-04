@@ -1,8 +1,10 @@
-import React, {FunctionComponent, PureComponent} from 'react';
-import SearchArea from "../components/App/SearchArea";
-import ResultArea from "../components/App/ResultArea";
+import React, {FunctionComponent} from 'react';
 import {FilmData} from "../components/filmData";
 import {SortData} from "../../redux/data/dataSlice";
+import loadable from '@loadable/component';
+
+const SearchArea = loadable(() => import('../components/App/SearchArea'));
+const ResultArea = loadable(() => import('../components/App/ResultArea'));
 
 interface HomePageProps {
     data: Array<FilmData>;

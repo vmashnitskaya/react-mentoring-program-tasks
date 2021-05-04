@@ -1,10 +1,12 @@
 import React, { FunctionComponent } from 'react';
 import { useDispatch } from 'react-redux';
+import loadable from '@loadable/component';
 import { setFilterValue } from '../../../../../redux/data/dataSlice';
 import tabsHeaders from '../../../../staticData/tabsHeaders';
 import './Tabs.scss';
-import Button from '../../../common/Button/Button';
 import clsx from 'clsx';
+
+const Button = loadable(() => import('../../../common/Button/Button'));
 
 interface TabsProps {
     filter: string;

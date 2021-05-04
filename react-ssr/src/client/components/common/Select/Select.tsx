@@ -1,7 +1,9 @@
 import React, { PureComponent } from 'react';
-import Button from '../Button/Button';
+import loadable from '@loadable/component';
 import '../Modal/Modal';
 import './Select.scss';
+
+const Button = loadable(() => import('../Button/Button'));
 
 interface SelectProps {
     dropdownToggleMaterialIconTextClass: string;

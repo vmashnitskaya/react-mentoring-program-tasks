@@ -1,7 +1,8 @@
 import React, { FunctionComponent } from 'react';
+import loadable from '@loadable/component';
 import './ErrorPage404.scss';
-import Button from '../Button/Button';
 
+const Button = loadable(() => import('../Button/Button'));
 
 const ErrorPage404: FunctionComponent = () => {
         return <div className="page-not-found wrapper">

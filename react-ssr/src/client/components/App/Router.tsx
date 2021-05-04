@@ -2,17 +2,19 @@ import React, { FunctionComponent, useEffect } from 'react';
 import {
     Switch,
     Route,
-    Redirect, useHistory
+    Redirect
 } from "react-router-dom";
+import loadable from '@loadable/component';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     fetchSortedFilteredSearchedMovies,
     resetFirstRenderFlag
 } from '../../../redux/data/dataSlice';
-import HomePage from "../../pages/HomePage";
-import MoviePage from "../../pages/MoviePage";
-import MovieNotFound from "../../pages/MovieNotFound";
-import ErrorPage from "../../pages/ErrorPage";
+
+const HomePage = loadable(() => import('../../pages/HomePage'));
+const MoviePage = loadable(() => import('../../pages/MoviePage'));
+const MovieNotFound = loadable(() => import('../../pages/MovieNotFound'));
+const ErrorPage = loadable(() => import('../../pages/ErrorPage'));
 
 const Router: FunctionComponent = (): JSX.Element => {
     const dispatch = useDispatch();

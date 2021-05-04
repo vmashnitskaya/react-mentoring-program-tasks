@@ -1,7 +1,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 
 module.exports = {
   mode: 'production',
@@ -17,7 +17,7 @@ module.exports = {
   module: {
     rules: [
       {
-        loader: 'ts-loader',
+        use: ['babel-loader', 'ts-loader'],
         test: /\.tsx?$/,
         exclude: [/node_modules/],
       },
@@ -58,7 +58,7 @@ module.exports = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
   },
-  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' })],
+  plugins: [new MiniCssExtractPlugin({ filename: '[name].css' }), new LoadablePlugin()],
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),

@@ -1,10 +1,12 @@
 import React, {FunctionComponent} from 'react';
+import loadable from '@loadable/component';
 import {useSelector} from 'react-redux';
 import {useHistory} from "react-router";
-import Search from '../Search/Search';
-import MovieCard from '../MovieCard/MovieCard';
 import './MovieDetails.scss';
-import Button from '../../../common/Button/Button';
+
+const Search = loadable(() => import('../Search/Search'));
+const MovieCard = loadable(() => import('../MovieCard/MovieCard'));
+const Button = loadable(() => import('../../../common/Button/Button'));
 
 const MovieDetails: FunctionComponent<any> = () => {
     const history = useHistory();
