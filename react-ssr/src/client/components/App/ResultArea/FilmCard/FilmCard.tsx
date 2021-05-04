@@ -3,6 +3,7 @@ import { FilmData } from '../../../filmData';
 import MoreDropdown from '../MoreDropdown/MoreDropdown';
 import './FilmCard.scss';
 import {useHistory} from "react-router";
+import {Link} from "react-router-dom";
 
 interface FilmCardProps {
     cardInfo: FilmData;
@@ -12,17 +13,6 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
     cardInfo,
 }): JSX.Element => {
     const imageRef = useRef<HTMLImageElement | null>(null);
-    const history = useHistory();
-
-    const handleCardSelected = () => {
-        history.push(`/film/${cardInfo.id}`);
-    };
-
-    const handleCardSelectedByKeyboard = (e: KeyboardEvent<HTMLDivElement>) => {
-        if ((e as any).code === 'Enter') {
-            history.push(`/film/${cardInfo.id}`);
-        }
-    };
 
     const handleImageError = () => {
         if (imageRef && imageRef.current) {
@@ -37,16 +27,14 @@ const FilmCard: FunctionComponent<FilmCardProps> = ({
                 <div
                     className="card-image"
                     role="article"
-                    tabIndex={0}
-                    onClick={handleCardSelected}
-                    onKeyDown={handleCardSelectedByKeyboard}
-                >
+                    tabIndex={0}>
                     <img
                         ref={imageRef}
                         src={cardInfo.poster_path}
                         alt="poster"
                         onError={handleImageError}
                     />
+                    <Link className="navigation-link" to={location => ({ ...location, state: { id: cardInfo.id }, pathname: `/film/${cardInfo.title}`})} />
                 </div>
                 <div className="card-info">
                     <div>

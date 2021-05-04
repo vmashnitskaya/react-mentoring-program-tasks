@@ -1,12 +1,10 @@
-import React, {FunctionComponent, PureComponent, useEffect} from 'react';
+import React, {FunctionComponent, useEffect} from 'react';
 import {FilmData} from "../components/filmData";
 import {fetchMovie, resetErrorState, SortData} from "../../redux/data/dataSlice";
 import MovieDetails from "../components/App/MovieDetails";
 import ResultArea from "../components/App/ResultArea";
-import {useHistory, useParams} from "react-router";
+import {useHistory, useLocation, useParams} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
-import SearchArea from "../components/App/SearchArea";
-import {connect} from "formik";
 
 interface MoviePageProps {
     data: Array<FilmData>;
@@ -22,9 +20,17 @@ const MoviePage: FunctionComponent<MoviePageProps> = ({data, sortData, filter}) 
     const dispatch = useDispatch();
     const history = useHistory();
     let { id } = useParams<UseParamsProps>();
+    const { state } = useLocation();
 
     useEffect(() => {
-        dispatch(fetchMovie(id));
+        let movieId = '';
+
+        if(state) {
+            movieId = (state as any).id;
+        } else {
+            movieId = id;
+        }
+        dispatch(fetchMovie(movieId));
     }, [id])
 
     const error = useSelector((state) => state.data.error);
