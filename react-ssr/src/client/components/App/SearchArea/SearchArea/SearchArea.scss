@@ -1,0 +1,81 @@
+@import "src/client/components/constants";
+
+.search-area {
+  display: flex;
+  flex-direction: column;
+  height: 350px;
+  width: 100%;
+  background-size: cover;
+  border-bottom: 10px solid $main-grey-light;
+
+  .search-area-add {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+
+    button {
+      height: 45px;
+      width: 160px;
+      color: $main-pink;
+      background-color: rgba(66, 66, 66, 0.4);
+
+      &:hover {
+        background-color: rgba(66, 66, 66, 0.6);
+      }
+
+      &:active {
+        transform: scale(0.98);
+        background-color: rgba(66, 66, 66, 0.6);
+      }
+    }
+  }
+
+  .search-area-search {
+    margin: 35px 80px 0;
+    display: flex;
+    flex-direction: column;
+
+      .search-area-title {
+        color: $main-white;
+        font-size: 32px;
+        font-weight: 300;
+        letter-spacing: 3px;
+      }
+
+      .search-area-container {
+        display: flex;
+        margin-top: 35px;
+        height: 54px;
+        width: 100%;
+
+        input {
+          height: 100%;
+          width: 80%;
+          outline: none;
+          border: 0;
+          border-radius: $main-border-radius;
+          background-color: rgba(66, 66, 66, 0.4);
+          padding: 18px;
+          font-size: 18px;
+          color: $main-white;
+          margin-right: 15px;
+        }
+
+        button {
+          height: 100%;
+          width: 20%;
+          color: $main-white;
+          background-color: $main-pink;
+
+          &:hover {
+            background-color: darken($main-pink, 1);
+          }
+
+          &:active {
+            transform: scale(0.98);
+            background-color: darken($main-pink, 1);
+          }
+        }
+      }
+  }
+}

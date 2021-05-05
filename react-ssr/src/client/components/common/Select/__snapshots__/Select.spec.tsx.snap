@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select renders select snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="select-wrapper"
+  >
+    <button
+      class="material-icons select-toggle"
+      type="button"
+    >
+      close-icon
+    </button>
+  </div>
+</DocumentFragment>
+`;

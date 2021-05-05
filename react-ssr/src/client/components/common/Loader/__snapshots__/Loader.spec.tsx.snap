@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Loader renders loader snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="loader-wrapper"
+  >
+    <div
+      class="lds-ring"
+    >
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  </div>
+</DocumentFragment>
+`;

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button renders button snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="card"
+  >
+    <img
+      alt="poster"
+      class="card-image"
+      src="https://image.tmdb.org/t/p/w500/ylXCdC106IKiarftHkcacasaAcb.jpg"
+    />
+    <div
+      class="card-details"
+    >
+      <div
+        class="title"
+      >
+        <span
+          class="film-title"
+        >
+          La La Land
+        </span>
+        <span
+          class="film-rating"
+        >
+          7.9
+        </span>
+        <div
+          class="film-tagline"
+        >
+          Here's to the fools who dream.
+        </div>
+      </div>
+      <div
+        class="numbers"
+      >
+        <span
+          class="year"
+        >
+          2016
+        </span>
+        <span
+          class="runtime"
+        >
+          128 min
+        </span>
+      </div>
+      <p
+        class="description"
+      >
+        Mia, an aspiring actress, serves lattes to movie stars in between auditions and Sebastian, a jazz musician, scrapes by playing cocktail party gigs in dingy bars, but as success mounts they are faced with decisions that begin to fray the fragile fabric of their love affair, and the dreams they worked so hard to maintain in each other threaten to rip them apart.
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;

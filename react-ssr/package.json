@@ -1,0 +1,72 @@
+{
+  "name": "react-ssr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "repository": "",
+  "author": "",
+  "scripts": {
+    "build-server": "webpack --config webpack.config.server.js",
+    "build-client": "webpack --config webpack.config.client.js",
+    "build": "npm run build-client && npm run build-server",
+    "start": "npm run build && node dist/server.js"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(scss)$": "identity-obj-proxy"
+    }
+  },
+  "dependencies": {
+    "@loadable/server": "^5.14.2",
+    "@reduxjs/toolkit": "^1.5.1",
+    "express": "^4.17.0",
+    "formik": "^2.2.6",
+    "isomorphic-fetch": "^3.0.0",
+    "material-icons": "^0.6.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.2.4",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0",
+    "yup": "^0.32.9"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@babel/preset-react": "^7.13.13",
+    "@babel/preset-typescript": "^7.13.0",
+    "@loadable/babel-plugin": "^5.13.2",
+    "@loadable/component": "^5.14.1",
+    "@loadable/webpack-plugin": "^5.14.2",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^11.2.6",
+    "@types/express": "^4.16.1",
+    "@types/jest": "^26.0.22",
+    "@types/react": "^16.8.17",
+    "@types/react-dom": "^16.9.12",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router": "^5.1.13",
+    "@types/react-router-dom": "^5.1.7",
+    "@types/redux-mock-store": "^1.0.2",
+    "aphrodite": "^2.3.1",
+    "babel-jest": "^26.6.3",
+    "babel-loader": "^8.2.2",
+    "clsx": "^1.1.1",
+    "copy-webpack-plugin": "^8.1.1",
+    "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
+    "mini-css-extract-plugin": "^1.5.0",
+    "redux": "^4.1.0",
+    "redux-mock-store": "^1.5.4",
+    "sass": "^1.32.11",
+    "sass-loader": "^11.0.1",
+    "source-map-loader": "^2.0.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^6.0.1",
+    "typescript": "^3.4.5",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.22.0",
+    "webpack-cli": "^4.5.0",
+    "webpack-node-externals": "^3.0.0"
+  }
+}

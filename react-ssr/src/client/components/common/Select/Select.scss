@@ -1,0 +1,43 @@
+@import "src/client/components/mixins";
+
+.select-wrapper {
+  min-width: 200px;
+
+  .material-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .select-body {
+    width: 100%;
+    height: 200px;
+    padding: 20px;
+    @include reset-style-list;
+    overflow: auto;
+    background-color: rgba(66, 66, 66, 0.9);
+    position: absolute;
+    top: 54px;
+    right: 0;
+    z-index: 1000;
+
+    li {
+      label {
+        padding: 8px;
+        position: relative;
+
+        input {
+          position: absolute;
+          top: 0;
+          left: 8px;
+          height: 16px;
+          width: 16px;
+        }
+
+        .select-item-value {
+          padding-left: 36px;
+        }
+      }
+    }
+  }
+}
